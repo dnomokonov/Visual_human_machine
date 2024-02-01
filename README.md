@@ -3,8 +3,8 @@
 
 A short course on visual programming and human-machine interaction of SIBGUTI
 
-Dev by ÈÏ-214 Nomokonov Danil
+Dev by IP-214 Nomokonov Danil
 
-## [Home work ¹1. Class diagrams](Homework-num-1-Class-diagrams/)
+## [Home work Â¹1. Class diagrams](Homework-num-1-Class-diagrams/)
 ![Static Badge](https://img.shields.io/badge/C%23-2F9CD2?style=for-the-badge&logo=csharp)![Static Badge](https://img.shields.io/badge/github-262722?style=for-the-badge&logo=github)
 
