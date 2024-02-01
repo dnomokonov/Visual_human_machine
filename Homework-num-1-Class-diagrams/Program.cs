@@ -50,11 +50,7 @@ class SMSLowBalanceNotifyer : INotifyer
         if (balance < _lowBalanceValue)
         {
             Console.WriteLine($"SMSLowBalanceNotifyer: {balance}");
-        } else
-        {
-            Console.WriteLine("SMSLowBalanceNotifyer");
         }
-        
     }
 }
 
