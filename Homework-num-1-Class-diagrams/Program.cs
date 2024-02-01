@@ -26,10 +26,11 @@
     {
         get { return _balance; }
     }
-    private void Notification() { 
-        for (int i = 0; i < _notifyers.Count; i++)
+    private void Notification() 
+    {
+        foreach (var notifi in _notifyers)
         {
-            _notifyers[i].Notify(this._balance);
+            notifi.Notify(this._balance);
         }
     }
 }
@@ -82,7 +83,7 @@ class Program
     static void Main(string[] arc)
     {
         Account account = new Account();
-        SMSLowBalanceNotifyer sms = new SMSLowBalanceNotifyer("+79930044455", 123);
+        SMSLowBalanceNotifyer sms = new SMSLowBalanceNotifyer("+79930044455", 180);
         EMailBalanceChangedNotifyer email = new EMailBalanceChangedNotifyer("email@email.com");
 
         account.AddNotifyer(sms);
