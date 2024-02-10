@@ -14,44 +14,44 @@
 
 	<Grid ColumnDefinitions="0.3*, 0.1, 0.66*">
 		<StackPanel Grid.Column="0">
-			<Border BorderThickness="2" Background="Khaki" BorderBrush="Black">
-				<Button Click="ClickHandler" Background="Khaki"
+			<Border BorderThickness="2" BorderBrush="Black">
+				<Button Name="buttonKhaki" Content="Khaki" Click="ClickHandler" Background="Khaki"
 				HorizontalContentAlignment="Center" HorizontalAlignment="Stretch">Khaki</Button>
 			</Border>
-			<Border BorderThickness="2" Background="Red" BorderBrush="Black">
-				<Button Click="ClickHandler" Background="Red"
+			<Border BorderThickness="2" BorderBrush="Black">
+				<Button Name="buttonRed" Content="Red" Click="ClickHandler" Background="Red"
 				HorizontalContentAlignment="Center" HorizontalAlignment="Stretch">Red</Button>
 			</Border>
-			<Border BorderThickness="2" BorderBrush="Black" Background="MediumVioletRed">
-				<Button Click="ClickHandler" Background="MediumVioletRed"
+			<Border BorderThickness="2" BorderBrush="Black">
+				<Button Name="buttonMediumVioletRed" Content="MediumVioletRed" Click="ClickHandler" Background="MediumVioletRed"
 				HorizontalContentAlignment="Center" HorizontalAlignment="Stretch">MediumVioletRed</Button>
 			</Border>
-			<Border BorderThickness="2" Background="Bisque" BorderBrush="Black">
-				<Button Click="ClickHandler" Background="Bisque"
+			<Border BorderThickness="2" BorderBrush="Black">
+				<Button Name="buttonBisque" Content="Bisque" Click="ClickHandler" Background="Bisque"
 				HorizontalContentAlignment="Center" HorizontalAlignment="Stretch">Bisque</Button>
 			</Border>
-			<Border BorderThickness="2" Background="LemonChiffon" BorderBrush="Black">
-				<Button Click="ClickHandler" Background="LemonChiffon"
+			<Border BorderThickness="2" BorderBrush="Black">
+				<Button Name="buttonLemonChiffon" Content="LemonChiffon" Click="ClickHandler" Background="LemonChiffon"
 				HorizontalContentAlignment="Center" HorizontalAlignment="Stretch">LemonChiffon</Button>
 			</Border>
-			<Border BorderThickness="2" Background="PowderBlue" BorderBrush="Black">
-				<Button Click="ClickHandler" Background="PowderBlue"
+			<Border BorderThickness="2" BorderBrush="Black">
+				<Button Name="buttonPowderBlue" Content="PowderBlue" Click="ClickHandler" Background="PowderBlue"
 				HorizontalContentAlignment="Center" HorizontalAlignment="Stretch">PowderBlue</Button>
 			</Border>
-			<Border BorderThickness="2" Background="MintCream" BorderBrush="Black">
-				<Button Click="ClickHandler" Background="MintCream"
+			<Border BorderThickness="2" BorderBrush="Black">
+				<Button Name="buttonMintCream" Content="MintCream" Click="ClickHandler" Background="MintCream"
 				HorizontalContentAlignment="Center" HorizontalAlignment="Stretch">MintCream</Button>
 			</Border>
-			<Border BorderThickness="2" Background="Maroon" BorderBrush="Black">
-				<Button Click="ClickHandler" Background="Maroon"
+			<Border BorderThickness="2" BorderBrush="Black">
+				<Button Name="buttonMaroon" Content="Maroon" Click="ClickHandler" Background="Maroon"
 				HorizontalContentAlignment="Center" HorizontalAlignment="Stretch">Maroon</Button>
 			</Border>
-			<Border BorderThickness="2" Background="RosyBrown" BorderBrush="Black">
-				<Button Click="ClickHandler" Background="RosyBrown"
+			<Border BorderThickness="2" BorderBrush="Black">
+				<Button Name="buttonRosyBrown" Content="RosyBrown" Click="ClickHandler" Background="RosyBrown"
 				HorizontalContentAlignment="Center" HorizontalAlignment="Stretch">RosyBrown</Button>
 			</Border>
-			<Border BorderThickness="2" Background="LightPink" BorderBrush="Black">
-				<Button Click="ClickHandler" Background="LightPink"
+			<Border BorderThickness="2" BorderBrush="Black">
+				<Button Name="buttonLightPink" Content="LightPink" Click="ClickHandler" Background="LightPink"
 				HorizontalContentAlignment="Center" HorizontalAlignment="Stretch">LightPink</Button>
 			</Border>
 		</StackPanel>
