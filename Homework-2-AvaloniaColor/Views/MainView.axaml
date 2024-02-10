@@ -12,7 +12,7 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-	<Grid ColumnDefinitions="0.3*, 0.001*, 0.66*">
+	<Grid ColumnDefinitions="0.3*, 0.1, 0.66*">
 		<StackPanel Grid.Column="0">
 			<Border BorderThickness="2" Background="Khaki" BorderBrush="Black">
 				<Button Click="ClickHandler" Background="Khaki"
