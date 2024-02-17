@@ -99,8 +99,8 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
-*.props
-*.Desktop
+*.props 
+*.Desktop 
 obj
 bin
 
