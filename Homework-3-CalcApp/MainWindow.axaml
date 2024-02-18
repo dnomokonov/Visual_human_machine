@@ -1,0 +1,57 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Homework3.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dc="clr-namespace:Homework3"
+        mc:Ignorable="d"
+        x:Class="Homework3.Views.MainWindow"
+        x:DataType="dc:Calculator"
+        Width="300"
+        Height="420"
+        MinHeight="420"
+        MinWidth="300"
+        MaxHeight="420"
+        MaxWidth="300"
+        Title="Calculator">
+        
+    <Window.DataContext>
+        <dc:Calculator/>
+    </Window.DataContext>
+
+    <StackPanel>
+        <Grid ColumnDefinitions="60, 60, 60, 60, 60, 60" RowDefinitions="60, 60, 60, 60, 60, 60, 60">
+            <Border Grid.ColumnSpan="5" BorderBrush="DarkOrchid" BorderThickness="3">
+                <TextBlock Name="displayTextBlock" Text="{Binding CurrentInput, Mode=OneWay}" Padding="10" VerticalAlignment="Center" FontSize="26"/>
+            </Border>
+			<Button Content="0" Command="{Binding NumberInput}" CommandParameter="0" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="1" Command="{Binding NumberInput}" CommandParameter="1" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="2" Command="{Binding NumberInput}" CommandParameter="2" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="3" Command="{Binding NumberInput}" CommandParameter="3" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="4" Command="{Binding NumberInput}" CommandParameter="4" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="5" Command="{Binding NumberInput}" CommandParameter="5" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="6" Command="{Binding NumberInput}" CommandParameter="6" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="+" Command="{Binding OperatorInput}" CommandParameter="+" Grid.Column="4" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="7" Command="{Binding NumberInput}" CommandParameter="7" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="8" Command="{Binding NumberInput}" CommandParameter="8" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="9" Command="{Binding NumberInput}" CommandParameter="9" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="-" Command="{Binding OperatorInput}" CommandParameter="-" Grid.Column="4" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="C" Command="{Binding ClearInput}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+			<Button Content="←" Command="{Binding BackspaceInput}" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="." Command="{Binding CommaInput}" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="*" Command="{Binding OperatorInput}" CommandParameter="*" Grid.Column="4" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+			<Button Content="/" Command="{Binding OperatorInput}" CommandParameter="/" Grid.Column="3" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="^" Command="{Binding PowerFunction}" Grid.Column="3" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="lg" Command="{Binding LogFunction}" Grid.Column="3" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="ln" Command="{Binding LnFunction}" Grid.Column="4" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="sin" Command="{Binding SinFunction}" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="cos" Command="{Binding CosFunction}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="tan" Command="{Binding TanFunction}" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="ceil" Command="{Binding CeilFunction}"  Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+			<Button Content="floor" Command="{Binding FloorFunction}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="n!" Command="{Binding FactorialFunction}" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="%" Command="{Binding ModFunction}" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="=" Command="{Binding EqualsInput}" Grid.Column="4" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </Grid>
+    </StackPanel>
+</Window>
