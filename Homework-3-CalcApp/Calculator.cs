@@ -7,9 +7,9 @@ namespace Homework3
     {
         private string _currentInput = "0";
         private double _currentResult = 0;
+        private double _previousOperand = 0;
         private char? _lastOperator = null;
         private char? _previousOperator = null;
-        private double _previousOperand = 0;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -25,13 +25,19 @@ namespace Homework3
 
         public void AppendInput(char input)
         {
-            _currentInput += input;
+            if (_currentInput == "0" && input != ',')
+            {
+                _currentInput = input.ToString();
+            }
+            else
+            {
+                _currentInput += input;
+            }
         }
 
         public void NumberInput(char number)
         {
             AppendInput(number);
-            _currentInput = number.ToString();
             CurrentInput = _currentInput;
         }
 
@@ -85,7 +91,12 @@ namespace Homework3
             {
                 _currentInput = _currentInput.Remove(_currentInput.Length - 1);
                 CurrentInput = _currentInput;
-            }
+                if (_currentInput.Length == 0)
+                {
+                    _currentInput = "0";
+                    CurrentInput = _currentInput;
+                }
+            } 
         }
 
         public void ModFunction()
