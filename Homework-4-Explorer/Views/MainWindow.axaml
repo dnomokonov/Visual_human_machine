@@ -15,12 +15,12 @@
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
 
-	<ListBox ItemsSource="{Binding Explorer.Directories}" SelectedItem="{Binding Explorer.SelectedDir}">
+	<ListBox ItemsSource="{Binding Explorer.Directories}" DoubleTapped="OnListBoxDoubleTapped">
 		<ListBox.ItemTemplate>
 			<DataTemplate>
 				<StackPanel Orientation="Horizontal">
-					<Image Source="{Binding ImagePath}" Width="20" Height="20" Margin="0 0 10 0"/>
-					<TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+					<Image Source="{Binding ImagePath}" Width="28" Height="28" Margin="0 0 10 0"/>
+					<TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="16"/>
 				</StackPanel>
 			</DataTemplate>
 		</ListBox.ItemTemplate>
