@@ -21,3 +21,6 @@ Dev by IP-214 Nomokonov Danil
 ## [Homework #4. Displaying collections](Homework-4-Explorer/)
 ![Static Badge](https://img.shields.io/badge/C%23-2F9CD2?style=for-the-badge&logo=csharp) ![Static Badge](https://img.shields.io/badge/AVALONIA-B321D6?style=for-the-badge&logo=framework)
 <br/>Implement an application to view the file system. The application window should display a list of files and directories in the working directory.
+
+## [Homework #5. Asynchrony in C#](Homework-5-ImprovedFileExplorer/)
+![Static Badge](https://img.shields.io/badge/C%23-2F9CD2?style=for-the-badge&logo=csharp) ![Static Badge](https://img.shields.io/badge/AVALONIA-B321D6?style=for-the-badge&logo=framework)
