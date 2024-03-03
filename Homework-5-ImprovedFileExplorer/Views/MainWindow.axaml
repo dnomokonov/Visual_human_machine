@@ -13,17 +13,18 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<Grid>
-		<ListBox>
+	<Grid ColumnDefinitions="0.3*, 0.8*">
+		<ListBox Grid.Column="0" ItemsSource="{Binding ExplorerManager.Files}" DoubleTapped="OnListBoxDoubleTapped">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">
-						<Image Width="28" Height="28" Margin="0 0 10 0"/>
-						<TextBlock VerticalAlignment="Center" FontSize="16"/>
+						<Image Source="{Binding ImagePath}" Width="28" Height="28" Margin="0 0 10 0"/>
+						<TextBlock Text="{Binding NameFile}" VerticalAlignment="Center" FontSize="16"/>
 					</StackPanel>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+		<Image Grid.Column="2" Source="{Binding ExplorerManager.SelectedImage}"/>
 	</Grid>
 
 </Window>

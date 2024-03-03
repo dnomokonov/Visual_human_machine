@@ -58,10 +58,9 @@ public class ExplorerFileMenager : ObservableObject
         get => _directories;
         set => SetProperty(ref _directories, value);
     }
-    
+
     public ExplorerFileMenager()
     {
-        
         showDirectory();
     }
 
