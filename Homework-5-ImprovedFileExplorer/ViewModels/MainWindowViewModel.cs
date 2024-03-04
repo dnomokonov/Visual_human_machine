@@ -47,7 +47,7 @@ public class DataFileExplorer : ObservableObject
 public class ExplorerFileManager : ObservableObject
 {
     private ObservableCollection<DataFileExplorer> _files = new ObservableCollection<DataFileExplorer>();
-    private string _currentPath;
+    private string _currentPath = Directory.GetCurrentDirectory();
     private FileSystemWatcher _fileWatcher;
     private DataFileExplorer _selected;
     private Bitmap? _selectedImage;
@@ -61,23 +61,21 @@ public class ExplorerFileManager : ObservableObject
 
     public ExplorerFileManager()
     {
-        _currentPath = Directory.GetCurrentDirectory();
         LoadItemsAsync();
+    }
 
-        _fileWatcher = new FileSystemWatcher();
-        _fileWatcher.Path = _currentPath;
-        _fileWatcher.IncludeSubdirectories = true;
+    private async Task LoadItemsAsync()
+    {
+        _fileWatcher = new FileSystemWatcher(_currentPath);
+        _fileWatcher.IncludeSubdirectories = false;
         _fileWatcher.EnableRaisingEvents = true;
+
+        Files.Clear();
 
         _fileWatcher.Changed += FileWatcher_OnChanged;
         _fileWatcher.Created += FileWatcher_OnChanged;
         _fileWatcher.Deleted += FileWatcher_OnChanged;
         _fileWatcher.Renamed += FileWatcher_OnChanged;
-    }
-
-    private async Task LoadItemsAsync()
-    {
-        Files.Clear();
 
         if (_statusShow == 0)
         {
@@ -139,15 +137,7 @@ public class ExplorerFileManager : ObservableObject
                         });
                     }
                 }
-                catch {
-                    Files.Add(new DataFileExplorer
-                    {
-                        NameFile = Path.GetFileName(f),
-                        PathFile = f,
-                        TypeFile = Path.GetExtension(f),
-                        ImagePath = new Bitmap(AssetLoader.Open(new Uri("avares://Homework-5-ImprovedFileExplorer/Assets/file.png"))),
-                    });
-                }
+                catch { }
             }
 
         });
@@ -173,21 +163,21 @@ public class ExplorerFileManager : ObservableObject
     }
 
     
-    private void FileWatcher_OnChanged(object s, FileSystemEventArgs e)
+    private async void FileWatcher_OnChanged(object s, FileSystemEventArgs e)
     {
         switch (e.ChangeType)
         {
             case WatcherChangeTypes.Changed:
-                LoadItemsAsync();
+                await LoadItemsAsync();
                 break;
             case WatcherChangeTypes.Created:
-                LoadItemsAsync();
+                await LoadItemsAsync();
                 break;
             case WatcherChangeTypes.Deleted:
-                LoadItemsAsync();
+                await LoadItemsAsync();
                 break;
             case WatcherChangeTypes.Renamed:
-                LoadItemsAsync();
+                await LoadItemsAsync();
                 break;
         }
     }

@@ -23,6 +23,7 @@ namespace Homework3
             }
         }
 
+        // добавляем символ в текущий ввод
         public void AppendInput(char input)
         {
             if (_currentInput == "0" && input != ',')
@@ -35,12 +36,14 @@ namespace Homework3
             }
         }
 
+        // добавляем цифру в текущий ввод и обновляем его
         public void NumberInput(char number)
         {
             AppendInput(number);
             CurrentInput = _currentInput;
         }
 
+        // обрабатывает ввод оператора и выполняет операцию, если уже есть предыдущий оператор
         public void OperatorInput(char op)
         {
             if (_lastOperator != null)
@@ -62,6 +65,7 @@ namespace Homework3
             CurrentInput = "0";
         }
 
+        // обрабатывает нажатие на кнопку "равно" и выполняет последнюю операцию
         public void EqualsInput()
         {
             if (_lastOperator != null)
@@ -78,6 +82,7 @@ namespace Homework3
             CurrentInput = _currentResult.ToString();
         }
 
+        // очистка текущего ввода
         public void ClearInput()
         {
             CurrentInput = "0";
@@ -85,6 +90,7 @@ namespace Homework3
             _lastOperator = null;
         }
 
+        // удаление цифр (символов) из текущего ввода (по одной)
         public void BackspaceInput()
         {
             if (_currentInput.Length > 0)
