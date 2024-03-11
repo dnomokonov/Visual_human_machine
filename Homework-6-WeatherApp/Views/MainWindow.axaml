@@ -12,23 +12,73 @@
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
+	
+	<Border Background="rgb(124, 202, 213, 0.5)">
+		<Grid ColumnDefinitions="" RowDefinitions="0.1*, 0.4*, 0.5*" ShowGridLines="True">
+			<Grid Grid.Row="1">
+				<TextBlock Text="{Binding dateViewModel.DateNow}" HorizontalAlignment="Center" FontSize="18"/>
 
-	<Grid ColumnDefinitions="" RowDefinitions="0.1*, 0.4*, 0.5*" ShowGridLines="True">
-		<Grid Grid.Row="1">
-			<TextBlock Text="{Binding dateViewModel.DateNow}" HorizontalAlignment="Center" FontSize="18"/>
+				<Grid RowDefinitions="0.6*, 0.4*, 0.3*" ShowGridLines="True">
+					<StackPanel Grid.Row="0" VerticalAlignment="Center" Margin="20 20 0 0">
+						<TextBlock Text="{Binding City}" FontSize="18"/>
+						<TextBlock Text="{Binding Weathers[0].TempFeel}" FontSize="25" FontWeight="Bold"/>
+					</StackPanel>
 
-			<Grid RowDefinitions="0.6*, 0.3*, 0.3*" ShowGridLines="True">
-				<StackPanel Grid.Row="0" VerticalAlignment="Center" Margin="20 20 0 0">
-					<TextBlock Text="{Binding City}" FontSize="18"/>
-					<TextBlock Text="{Binding Weathers[0].TempFeel}" FontSize="25" FontWeight="Bold"/>
-				</StackPanel>
-				
-				
-				
+					<StackPanel Grid.Row="1">
+						<ItemsControl ItemsSource="{Binding Weathers}">
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Vertical" Margin="15">
+										<TextBlock Text="{Binding Date, StringFormat='HH:mm'}" />
+										<TextBlock Text="{Binding TempFeel}" FontWeight="Bold" />
+									</StackPanel>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</StackPanel>
+
+					<StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<StackPanel VerticalAlignment="Center" Margin="14">
+							<TextBlock Text="Humidity"/>
+							<TextBlock Text="{Binding Weathers[0].Humidity}" FontWeight="Bold"/>
+						</StackPanel>
+						<StackPanel VerticalAlignment="Center" Margin="14">
+							<TextBlock Text="Wind"/>
+							<TextBlock Text="{Binding Weathers[0].WindSpeed}" FontWeight="Bold"/>
+						</StackPanel>
+						<StackPanel VerticalAlignment="Center" Margin="14">
+							<TextBlock Text="Air Pressure"/>
+							<TextBlock Text="{Binding Weathers[0].Pressure}" FontWeight="Bold"/>
+						</StackPanel>
+						<StackPanel VerticalAlignment="Center" Margin="14">
+							<TextBlock Text="Pop"/>
+							<TextBlock Text="{Binding Weathers[0].Pop}" FontWeight="Bold"/>
+						</StackPanel>
+					</StackPanel>
+				</Grid>
 			</Grid>
-
-
+		
+		
+			<Grid Grid.Row="2">
+				<Border CornerRadius="20, 20, 0, 0" Background="rgb(255, 255, 255, 0.6)" Margin="0 15 0 0">
+					<ItemsControl ItemsSource="{Binding WeatherDay}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<StackPanel>
+									<TextBlock Text="{Binding Date, StringFormat='dddd d'}"/>
+								</StackPanel>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</Border>
+			</Grid>
+		
 		</Grid>
-	</Grid>
+	</Border>
 
 </Window>

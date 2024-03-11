@@ -10,7 +10,6 @@ namespace Homework_6_WeatherApp.ViewModels
         public class WeatherVariable
         {
             public DateTime? Date { get; set; }
-            public DateTime? Time { get; set; }
             public string? TempMin { get; set; }
             public string? TempMax { get; set; }
             public string? TempFeel { get; set; }
@@ -36,7 +35,6 @@ namespace Homework_6_WeatherApp.ViewModels
                     WeatherVariable weatherVariable = new WeatherVariable
                     {
                         Date = DateTimeOffset.FromUnixTimeSeconds(elem.GetProperty("dt").GetInt64()).DateTime,
-                        Time = DateTimeOffset.FromUnixTimeSeconds(elem.GetProperty("dt").GetInt64()).DateTime,
                         TempMin = (Math.Floor(elem.GetProperty("main").GetProperty("temp_min").GetDouble())).ToString() + "°",
                         TempMax = (Math.Ceiling(elem.GetProperty("main").GetProperty("temp_max").GetDouble())).ToString() + "°",
                         TempFeel = (Math.Ceiling(elem.GetProperty("main").GetProperty("feels_like").GetDouble())).ToString() + "°",
