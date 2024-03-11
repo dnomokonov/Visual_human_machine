@@ -1,0 +1,22 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Homework_6_WeatherApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="600"
+        x:Class="Homework_6_WeatherApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Homework_6_WeatherApp">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Grid ColumnDefinitions="" RowDefinitions="0.1*, 0.4*, 0.6*" ShowGridLines="True">
+		<Grid Grid.Row="1">
+			<TextBlock Text="{Binding dateViewModel.DateNow}" HorizontalAlignment="Center" FontSize="18"/>
+		</Grid>
+	</Grid>
+
+</Window>
