@@ -24,7 +24,7 @@ namespace Homework_6_WeatherApp.ViewModels
 
         private void UpdateDate()
         {
-            DateNow = DateTime.Now.ToString("dddd d", new System.Globalization.CultureInfo("en-US"));
+            DateNow = DateTime.Now.ToString("dddd, d", new System.Globalization.CultureInfo("en-US"));
         }
 
         private void SetupTimer()

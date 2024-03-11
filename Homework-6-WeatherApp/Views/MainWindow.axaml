@@ -13,9 +13,21 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<Grid ColumnDefinitions="" RowDefinitions="0.1*, 0.4*, 0.6*" ShowGridLines="True">
+	<Grid ColumnDefinitions="" RowDefinitions="0.1*, 0.4*, 0.5*" ShowGridLines="True">
 		<Grid Grid.Row="1">
 			<TextBlock Text="{Binding dateViewModel.DateNow}" HorizontalAlignment="Center" FontSize="18"/>
+
+			<Grid RowDefinitions="0.6*, 0.3*, 0.3*" ShowGridLines="True">
+				<StackPanel Grid.Row="0" VerticalAlignment="Center" Margin="20 20 0 0">
+					<TextBlock Text="{Binding City}" FontSize="18"/>
+					<TextBlock Text="{Binding Weathers[0].TempFeel}" FontSize="25" FontWeight="Bold"/>
+				</StackPanel>
+				
+				
+				
+			</Grid>
+
+
 		</Grid>
 	</Grid>
 
