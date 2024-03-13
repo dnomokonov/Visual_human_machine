@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Avalonia.Media.Imaging;
 using System.Text.Json;
+using System.Xml.Linq;
+using Avalonia.Platform;
 using ReactiveUI;
 
 namespace Homework_6_WeatherApp.ViewModels
@@ -17,7 +20,8 @@ namespace Homework_6_WeatherApp.ViewModels
             public string? Humidity { get; set; }
             public string? WindSpeed { get; set; }
             public double? Pop { get; set; }
-            //public Bitmap? Icon { get; set; }
+            public string? IconCode {  get; set; }
+            public Bitmap? Icon { get; set; }
         }
 
         public static List<WeatherVariable> ParseWeatherData(string json)
@@ -31,7 +35,6 @@ namespace Homework_6_WeatherApp.ViewModels
 
                 foreach (var elem in list.EnumerateArray())
                 {
-
                     WeatherVariable weatherVariable = new WeatherVariable
                     {
                         Date = DateTimeOffset.FromUnixTimeSeconds(elem.GetProperty("dt").GetInt64()).DateTime,
@@ -42,8 +45,14 @@ namespace Homework_6_WeatherApp.ViewModels
                         Humidity = (elem.GetProperty("main").GetProperty("humidity").GetInt32()).ToString() + "%",
                         WindSpeed = (elem.GetProperty("wind").GetProperty("speed").GetDouble()).ToString() + " ms",
                         Pop = elem.GetProperty("pop").GetDouble(),
-                        //Icon = new Bitmap(AssetLoader.Open(new Uri($"avares://Homework_6_ExternalServices/Assets/{elem.GetProperty("weather").GetProperty("icon").GetString()}.png")))
                     };
+
+                    string? iconCode = elem.GetProperty("weather")[0].GetProperty("icon").GetString();
+                    string path = $"avares://Homework-6-WeatherApp/Assets/{iconCode}.png";
+                    Bitmap icon = new Bitmap(AssetLoader.Open(new Uri(path)));
+
+                    weatherVariable.IconCode = iconCode;
+                    weatherVariable.Icon = icon;
 
                     weatherForecast.Add(weatherVariable);
                 }

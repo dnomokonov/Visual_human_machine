@@ -1,25 +1,30 @@
-﻿using Avalonia.Threading;
+﻿using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Globalization;
 
 namespace Homework_6_WeatherApp.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private string? _city = "Moscow";
+    private string? _city = "";
     private List<ShowContentViewModel.WeatherVariable>? weather = new List<ShowContentViewModel.WeatherVariable>();
     public DateViewModel dateViewModel { get; }
     public ClientRestAPIViewModel ClientRestAPI { get; }
+    public SwapThemeViewModel swapThemeViewModel { get; }
+    public ReactiveCommand<Unit, Unit> SearchCommand { get; }
 
     public MainWindowViewModel()
     {
         dateViewModel = new DateViewModel();
         ClientRestAPI = new ClientRestAPIViewModel();
+        swapThemeViewModel = new SwapThemeViewModel();
+
+        SearchCommand = ReactiveCommand.CreateFromTask(ExecuteSearch);
 
         Task.Run(async () =>
         {
@@ -30,7 +35,7 @@ public class MainWindowViewModel : ViewModelBase
     public string? City
     {
         get => _city;
-        set => _city = value;
+        set => this.RaiseAndSetIfChanged(ref _city, value);
     }
 
     public List<ShowContentViewModel.WeatherVariable>? Weathers
@@ -52,6 +57,9 @@ public class MainWindowViewModel : ViewModelBase
             return null;
         }
 
+        string? d = weather[0].IconCode;
+        swapThemeViewModel.SwapTheme(d);
+
         return weather.Take(Math.Min(5, weather.Count)).ToList();
     }
 
@@ -68,11 +76,18 @@ public class MainWindowViewModel : ViewModelBase
         return uDate;
     }
 
+    public async Task ExecuteSearch()
+    {
+        await UpdateWeather();
+        this.RaisePropertyChanged(nameof(City));
+    }
+
     public async Task UpdateWeather()
     {
         string? json = await ClientRestAPI.GetWeatherForecastAsync(City);
         if (json != null)
         {
+            weather = ShowContentViewModel.ParseWeatherData(json);
             Weathers = ShowContentViewModel.ParseWeatherData(json);
             WeatherDay = ShowContentViewModel.ParseWeatherData(json);
         }
