@@ -79,7 +79,6 @@ public class MainWindowViewModel : ViewModelBase
     public async Task ExecuteSearch()
     {
         await UpdateWeather();
-        this.RaisePropertyChanged(nameof(City));
     }
 
     public async Task UpdateWeather()
