@@ -24,3 +24,6 @@ Implement an application for viewing images based on homework No. 4.</br>
 1. Implementation of asynchronous loading of the file system tree</br>
 2. Implementation of displaying file system changes when it is changed outside the application
 (you can use the FileSystemWatcher class)
+
+## [Homework #6. WeatherApp](Homework-6-WeatherApp/)
+Applicationem ad effectum deducendi videre tempestas praenuntientur aliquot diebus ante. Ut notitia, Uti OpenWeather officium.
