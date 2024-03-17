@@ -27,3 +27,6 @@ Implement an application for viewing images based on homework No. 4.</br>
 
 ## [Homework #6. WeatherApp](Homework-6-WeatherApp/)
 Applicationem ad effectum deducendi videre tempestas praenuntientur aliquot diebus ante. Ut notitia, Uti OpenWeather officium.
+
+## [Homework #7. Reactive programming](Homework-7-Reactive/)
+Implement a factory that accepts an ObservableCollection object and returns an IObservable<NotifyCollectionChangedEventArgs> — a list of event arguments Inotifycollectionchanged for the transferred collection. Write a console program demonstrating the operation of the factory. In the program, it is necessary to pass as a subscriber a method that logs data about changes to a file.
