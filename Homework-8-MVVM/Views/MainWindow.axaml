@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Homework_8_MVVM.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:pages="using:Homework_8_MVVM.Views.Pages"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="Homework_8_MVVM.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Homework_8_MVVM">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<StackPanel>
+		
+		<RadioButton Content="DataGrid" Command="{Binding ChangeViewCommand}" CommandParameter="{Binding Path=VmbaseCollection[0]}"/>
+		<RadioButton Content="TreeView" Command="{Binding ChangeViewCommand}" CommandParameter="{Binding Path=VmbaseCollection[1]}"/>
+		
+		<Grid>
+			<ContentControl Content="{Binding Content}"/>
+		</Grid>
+
+	</StackPanel>
+
+</Window>
