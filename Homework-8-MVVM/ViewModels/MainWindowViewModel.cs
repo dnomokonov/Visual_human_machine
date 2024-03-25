@@ -14,7 +14,7 @@ namespace Homework_8_MVVM.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private object content;
+    private object? content;
     private ObservableCollection<BaseViewModel> vmbaseCollection;
 
     public ReactiveCommand<BaseViewModel, Unit> ChangeViewCommand { get; }
@@ -25,7 +25,7 @@ public class MainWindowViewModel : ViewModelBase
         vmbaseCollection.Add(new DataGridPageViewModel());
         vmbaseCollection.Add(new TreeViewPageViewModel());
 
-        Content = vmbaseCollection[0];
+        Content = null;
 
         ChangeViewCommand = ReactiveCommand.Create<BaseViewModel>(ChangeView);
     }
@@ -35,7 +35,7 @@ public class MainWindowViewModel : ViewModelBase
         Content = viewModel;
     }
 
-    public object Content
+    public object? Content
     {
         get => content;
         set

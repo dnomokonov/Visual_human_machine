@@ -3,7 +3,8 @@
         xmlns:vm="using:Homework_8_MVVM.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:pages="using:Homework_8_MVVM.Views.Pages"
+		xmlns:pages="using:Homework_8_MVVM.ViewModels.Pages"
+		xmlns:px="using:Homework_8_MVVM.Views.Pages"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="Homework_8_MVVM.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -14,7 +15,19 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<StackPanel>
+	<Window.DataTemplates>
+		<DataTemplate DataType="pages:DataGridPageViewModel">
+			<px:DataGridPage/>
+		</DataTemplate>
+	</Window.DataTemplates>
+
+	<Window.DataTemplates>
+		<DataTemplate DataType="pages:TreeViewPageViewModel">
+			<px:TreeViewPage/>
+		</DataTemplate>
+	</Window.DataTemplates>
+	
+	<StackPanel Margin="20 10 0 0">
 		
 		<RadioButton Content="DataGrid" Command="{Binding ChangeViewCommand}" CommandParameter="{Binding Path=VmbaseCollection[0]}"/>
 		<RadioButton Content="TreeView" Command="{Binding ChangeViewCommand}" CommandParameter="{Binding Path=VmbaseCollection[1]}"/>
