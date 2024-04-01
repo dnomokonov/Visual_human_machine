@@ -11,7 +11,7 @@
       <ControlTemplate>
 		  <StackPanel Width="200">
 			  <Button Content="{TemplateBinding NamedButton}" Command="{TemplateBinding ToggleButton}" Margin="0 0 10 0"/>
-			  <TextBlock Text="{Binding #test.Value}"/>
+			  <TextBlock Text="{Binding #test.Value, StringFormat={}{0:F0}}" IsVisible="{TemplateBinding IsOpen}"/>
 			  <Slider Width="200" Minimum="{TemplateBinding MinValue}" Maximum="{TemplateBinding MaxValue}" IsVisible="{TemplateBinding IsOpen}" x:Name="test"/>
 		  </StackPanel>
       </ControlTemplate>

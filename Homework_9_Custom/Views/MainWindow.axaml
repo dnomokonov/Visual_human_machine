@@ -19,7 +19,7 @@
     </Design.DataContext>
 
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-		<cc:CustomTemplatedControl  MaxValue="100"/>
+		<cc:CustomTemplatedControl MinValue="20" MaxValue="120"/>
 	</StackPanel>
 
 
