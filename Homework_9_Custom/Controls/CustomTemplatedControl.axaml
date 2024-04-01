@@ -1,0 +1,20 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Homework_9_Custom.Controls">
+  <Design.PreviewWith>
+    <controls:CustomTemplatedControl />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|CustomTemplatedControl">
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+		  <StackPanel Width="200">
+			  <Button Content="{TemplateBinding NamedButton}" Command="{TemplateBinding ToggleButton}" Margin="0 0 10 0"/>
+			  <TextBlock Text="{Binding #test.Value}"/>
+			  <Slider Width="200" Minimum="{TemplateBinding MinValue}" Maximum="{TemplateBinding MaxValue}" IsVisible="{TemplateBinding IsOpen}" x:Name="test"/>
+		  </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>
