@@ -12,8 +12,8 @@ using System;
 using Avalonia.Data;
 using System.Windows.Input;
 using ReactiveUI;
-using System.Reflection.Metadata;
-using Avalonia.VisualTree;
+using Avalonia.Input;
+using Avalonia.Controls.Shapes;
 
 namespace Homework_10_ColorPicker.Controls
 {
@@ -84,8 +84,12 @@ namespace Homework_10_ColorPicker.Controls
 
         }
 
-    }
 
+        public void Test(object parameter)
+        {
+
+        }
+    }
 
     public class ConverterColorToBrush : IValueConverter
     {

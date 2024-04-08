@@ -27,16 +27,9 @@
 								</ItemsControl.ItemsPanel>
 								<ItemsControl.ItemTemplate>
 									<DataTemplate x:DataType="Color">
-
-										<!--
-										<Rectangle Width="17" Height="17" Fill="{Binding Converter={StaticResource ColorToBrushConverter}}" Margin="5" Stroke="Black" StrokeThickness="0.3" />
-										-->
-										
-										<Border BorderBrush="Gray" BorderThickness="1" Margin="4">
-											<Button Command="{TemplateBinding}" Width="17" Height="17" CornerRadius="0" Padding="0" Background="{Binding Converter={StaticResource ColorToBrushConverter}}"/>
-										</Border>
-										
-
+										<Button Padding="0" Margin="4">
+											<Rectangle Width="17" Height="17" Fill="{Binding Converter={StaticResource ColorToBrushConverter}}" Stroke="Black" StrokeThickness="0.3"/>
+										</Button>
 									</DataTemplate>
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>
@@ -51,7 +44,9 @@
 								</ItemsControl.ItemsPanel>
 								<ItemsControl.ItemTemplate>
 									<DataTemplate x:DataType="Color">
-										<Rectangle Width="17" Height="17" Fill="{Binding Converter={StaticResource ColorToBrushConverter}}" Margin="5" Stroke="Black" StrokeThickness="0.3" />
+										<Button Margin="5" Padding="0">
+											<Rectangle Width="17" Height="17" Fill="{Binding Converter={StaticResource ColorToBrushConverter}}" Stroke="Black" StrokeThickness="0.3" />
+										</Button>
 									</DataTemplate>
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>
