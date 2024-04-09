@@ -8,6 +8,7 @@
 
 	<Styles.Resources>
 		<controls:ConverterColorToBrush x:Key="ColorToBrushConverter" />
+		<controls:RgbToBrushMultiConverter x:Key="MultiConverter"/>
 	</Styles.Resources>
 
 	<Style Selector="controls|ColorPickerControl">
@@ -27,7 +28,8 @@
 								</ItemsControl.ItemsPanel>
 								<ItemsControl.ItemTemplate>
 									<DataTemplate x:DataType="Color">
-										<Button Padding="0" Margin="4">
+										<Button Command="{Binding GetPrimaryColor, 
+                                RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ColorPickerControl}}" CommandParameter="{Binding $self.((Rectangle)Content).Fill}" Padding="0" Margin="4">
 											<Rectangle Width="17" Height="17" Fill="{Binding Converter={StaticResource ColorToBrushConverter}}" Stroke="Black" StrokeThickness="0.3"/>
 										</Button>
 									</DataTemplate>
@@ -44,7 +46,8 @@
 								</ItemsControl.ItemsPanel>
 								<ItemsControl.ItemTemplate>
 									<DataTemplate x:DataType="Color">
-										<Button Margin="5" Padding="0">
+										<Button Command="{Binding GetPrimaryColor,
+                                RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ColorPickerControl}}" CommandParameter="{Binding $self.((Rectangle)Content).Fill}" Padding="0" Margin="4">
 											<Rectangle Width="17" Height="17" Fill="{Binding Converter={StaticResource ColorToBrushConverter}}" Stroke="Black" StrokeThickness="0.3" />
 										</Button>
 									</DataTemplate>
@@ -55,7 +58,16 @@
 					<StackPanel Grid.Column="1" Margin="0 10 0 0" HorizontalAlignment="Center">
 						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 							<Border BorderBrush="Black" BorderThickness="1" Margin="0 0 20 0">
-								<ColorSpectrum Color="{TemplateBinding CurrentColor, Mode=TwoWay}" Width="200" Height="200"/>
+								<ColorSpectrum Color="{TemplateBinding CurrentColor, Mode=TwoWay}" x:Name="Spectrum" Width="200" Height="200">
+									<ColorSpectrum.Color>
+										<MultiBinding Converter="{StaticResource MultiConverter}">
+											<Binding Path="Text" ElementName="Red"/>
+											<Binding Path="Text" ElementName="Green"/>
+											<Binding Path="Text" ElementName="Blue"/>
+											<Binding Path="Text" ElementName="Alpha"/>
+										</MultiBinding>
+									</ColorSpectrum.Color>
+								</ColorSpectrum>
 							</Border>
 							<ColorSlider ColorComponent="Alpha" Color="{TemplateBinding CurrentColor, Mode=TwoWay}" Orientation="Vertical"/>
 						</StackPanel>
@@ -69,19 +81,19 @@
 								<Grid ColumnDefinitions="0.5*, 0.5*" ShowGridLines="True">
 									<StackPanel Grid.Column="0" HorizontalAlignment="Center">
 										<TextBlock Text="Оттенок:" FontSize="12"/>
-										<TextBox Width="4" Text="" />
+										<TextBox Width="4" Text="{Binding CurrentHsvColor.H, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ColorPickerControl}, StringFormat=N1, Mode=TwoWay}" x:Name="Shade" x:DataType="Color"/>
 										<TextBlock Text="Контраст:" FontSize="12"/>
-										<TextBox Width="4" Text="" />
+										<TextBox Width="4" Text="{Binding CurrentHsvColor.S, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ColorPickerControl}, StringFormat=N1, Mode=TwoWay}" x:Name="Contrast"/>
 										<TextBlock Text="Яркость:" FontSize="12"/>
-										<TextBox Width="4" Text="" />
+										<TextBox Width="4" Text="{Binding CurrentColor.A, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ColorPickerControl}}" x:Name="Alpha"/>
 									</StackPanel>
 									<StackPanel Grid.Column="1" HorizontalAlignment="Center">
 										<TextBlock Text="Красный:" FontSize="12"/>
-										<TextBox Width="4" Text="" />
+										<TextBox Width="4" Text="{Binding CurrentColor.R, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ColorPickerControl}}" x:Name="Red"/>
 										<TextBlock Text="Зеленый:" FontSize="12"/>
-										<TextBox Width="4" Text="" />
+										<TextBox Width="4" Text="{Binding CurrentColor.G, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ColorPickerControl}}" x:Name="Green"/>
 										<TextBlock Text="Синий:" FontSize="12"/>
-										<TextBox Width="4" Text="" />
+										<TextBox Width="4" Text="{Binding CurrentColor.B, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:ColorPickerControl}}" x:Name="Blue"/>
 									</StackPanel>
 								</Grid>
 							</StackPanel>

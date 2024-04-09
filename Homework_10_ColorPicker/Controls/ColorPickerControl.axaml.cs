@@ -1,5 +1,4 @@
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
@@ -12,18 +11,22 @@ using System;
 using Avalonia.Data;
 using System.Windows.Input;
 using ReactiveUI;
-using Avalonia.Input;
-using Avalonia.Controls.Shapes;
+using System.Reactive;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Avalonia.Controls;
+
 
 namespace Homework_10_ColorPicker.Controls
 {
-    public class ColorPickerControl : TemplatedControl
+    public class ColorPickerControl : TemplatedControl, INotifyPropertyChanged
     {
         private int indexColor;
 
         public static readonly StyledProperty<List<Color>> PrimaryColorsProperty = AvaloniaProperty.Register<ColorPickerControl, List<Color>>(nameof(PrimaryColors));
         public static readonly StyledProperty<ObservableCollection<Color>> AdditionalColorsProperty = AvaloniaProperty.Register<ColorPickerControl, ObservableCollection<Color>>(nameof(AdditionalColors));
         public static readonly StyledProperty<Color> CurrentColorProperty = AvaloniaProperty.Register<ColorPickerControl, Color>(nameof(CurrentColor), Colors.Aquamarine, defaultBindingMode:BindingMode.TwoWay);
+        public static readonly StyledProperty<HsvColor> CurrentHsvColorProperty = AvaloniaProperty.Register<ColorPickerControl, HsvColor>(nameof(CurrentHsvColor), defaultValue: Colors.Aquamarine.ToHsv());
         public static readonly StyledProperty<ICommand> AddColorProperty = AvaloniaProperty.Register<ColorPickerControl, ICommand>(nameof(AddColor));
         public static readonly StyledProperty<ICommand> GetPrimaryColorProperty = AvaloniaProperty.Register<ColorPickerControl, ICommand>(nameof(GetPrimaryColor));
 
@@ -43,6 +46,12 @@ namespace Homework_10_ColorPicker.Controls
         {
             get => GetValue(CurrentColorProperty);
             set => SetValue(CurrentColorProperty, value);
+        }
+
+        public HsvColor CurrentHsvColor
+        {
+            get => GetValue(CurrentHsvColorProperty);
+            set => SetValue(CurrentHsvColorProperty, value);
         }
 
         public ICommand GetPrimaryColor
@@ -72,6 +81,7 @@ namespace Homework_10_ColorPicker.Controls
             
             AdditionalColors = new ObservableCollection<Color>(Enumerable.Repeat(Color.Parse("#FFFFFF"), 32));
 
+
             AddColor = ReactiveCommand.Create(() =>
             {
                 if (indexColor == 32)
@@ -82,12 +92,14 @@ namespace Homework_10_ColorPicker.Controls
                 indexColor++;
             });
 
-        }
+            CurrentHsvColor = (Color.Parse(CurrentColor.ToString())).ToHsv();
 
+            GetPrimaryColor = ReactiveCommand.Create<IBrush, Unit>(brush =>
+            {
+                CurrentColor = Color.Parse(brush.ToString());
 
-        public void Test(object parameter)
-        {
-
+                return Unit.Default;
+            });
         }
     }
 
@@ -111,6 +123,29 @@ namespace Homework_10_ColorPicker.Controls
             return AvaloniaProperty.UnsetValue;
         }
 
+    }
+
+    public class RgbToBrushMultiConverter : IMultiValueConverter
+    {
+        public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+        {
+
+            if (values?.Count != 4 || !targetType.IsAssignableFrom(typeof(Color)))
+                throw new NotSupportedException();
+
+            if (!values.All(x => x is string or UnsetValueType or null))
+                return BindingOperations.DoNothing;
+
+            if (!byte.TryParse((string?)values[0], out var r) ||
+                !byte.TryParse((string?)values[1], out var g) ||
+                !byte.TryParse((string?)values[2], out var b) ||
+                !byte.TryParse((string?)values[3], out var a))
+
+                return BindingOperations.DoNothing;
+
+            var color = new Color(a, r, g, b);
+            return color;
+        }
     }
 
 }
