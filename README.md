@@ -30,3 +30,12 @@ Applicationem ad effectum deducendi videre tempestas praenuntientur aliquot dieb
 
 ## [Homework #7. Reactive programming](Homework-7-Reactive/)
 Implement a factory that accepts an ObservableCollection object and returns an IObservable<NotifyCollectionChangedEventArgs> — a list of event arguments Inotifycollectionchanged for the transferred collection. Write a console program demonstrating the operation of the factory. In the program, it is necessary to pass as a subscriber a method that logs data about changes to a file.
+
+## [Homework #8. MVVM Architectural Template](Homework-8-MVVM/)
+Implement a graphical application that, when launched, receives information about users at https://jsonplaceholder.typicode.com/users and displays them on the screen. To implement two views for output - flat output (using the DataGrid element) and a hierarchical tree (using TreeView), the roots of the elements must be the user id.
+
+## [Homework #9. Custom Controls №1](Homework_9_Custom/)
+Create a custom control that will have two states — collapsed and full-size. When collapsed, the control is a square icon. In the expanded form, there is a scale next to the icon (you can do it based on the Slider element). Switching between views should take place by clicking on the icon. The control must have properties that determine the shape of the control, the icon, and the maximum and minimum scale values.
+
+## [Homework #10. Custom Controls №2](Homework_10_ColorPicker)
+Create a Palette control. The element must include all the necessary properties: the selected color, size, etc.
