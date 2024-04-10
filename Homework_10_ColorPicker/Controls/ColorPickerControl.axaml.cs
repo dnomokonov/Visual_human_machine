@@ -26,7 +26,7 @@ namespace Homework_10_ColorPicker.Controls
         public static readonly StyledProperty<List<Color>> PrimaryColorsProperty = AvaloniaProperty.Register<ColorPickerControl, List<Color>>(nameof(PrimaryColors));
         public static readonly StyledProperty<ObservableCollection<Color>> AdditionalColorsProperty = AvaloniaProperty.Register<ColorPickerControl, ObservableCollection<Color>>(nameof(AdditionalColors));
         public static readonly StyledProperty<Color> CurrentColorProperty = AvaloniaProperty.Register<ColorPickerControl, Color>(nameof(CurrentColor), Colors.Aquamarine, defaultBindingMode:BindingMode.TwoWay);
-        public static readonly StyledProperty<HsvColor> CurrentHsvColorProperty = AvaloniaProperty.Register<ColorPickerControl, HsvColor>(nameof(CurrentHsvColor), defaultValue: Colors.Aquamarine.ToHsv());
+        public static readonly StyledProperty<HsvColor> CurrentHsvColorProperty = AvaloniaProperty.Register<ColorPickerControl, HsvColor>(nameof(CurrentHsvColor), Colors.Aquamarine.ToHsv(), defaultBindingMode: BindingMode.TwoWay);
         public static readonly StyledProperty<ICommand> AddColorProperty = AvaloniaProperty.Register<ColorPickerControl, ICommand>(nameof(AddColor));
         public static readonly StyledProperty<ICommand> GetPrimaryColorProperty = AvaloniaProperty.Register<ColorPickerControl, ICommand>(nameof(GetPrimaryColor));
 
@@ -45,7 +45,10 @@ namespace Homework_10_ColorPicker.Controls
         public Color CurrentColor
         {
             get => GetValue(CurrentColorProperty);
-            set => SetValue(CurrentColorProperty, value);
+            set {
+                CurrentHsvColor = value.ToHsv();
+                SetValue(CurrentColorProperty, value);
+            }
         }
 
         public HsvColor CurrentHsvColor
@@ -92,14 +95,14 @@ namespace Homework_10_ColorPicker.Controls
                 indexColor++;
             });
 
-            CurrentHsvColor = (Color.Parse(CurrentColor.ToString())).ToHsv();
-
             GetPrimaryColor = ReactiveCommand.Create<IBrush, Unit>(brush =>
             {
                 CurrentColor = Color.Parse(brush.ToString());
+                CurrentHsvColor = (Color.Parse(brush.ToString())).ToHsv();
 
                 return Unit.Default;
             });
+
         }
     }
 
@@ -122,7 +125,6 @@ namespace Homework_10_ColorPicker.Controls
             }
             return AvaloniaProperty.UnsetValue;
         }
-
     }
 
     public class RgbToBrushMultiConverter : IMultiValueConverter
