@@ -1,0 +1,17 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:hw_11.Components">
+    <Design.PreviewWith>
+        <controls:ObjectVisualizer />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|ObjectVisualizer">
+        <Setter Property="Template">
+            <ControlTemplate >
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <ContentPresenter Content="{Binding Content}"></ContentPresenter>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
