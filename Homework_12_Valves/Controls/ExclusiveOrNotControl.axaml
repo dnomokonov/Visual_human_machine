@@ -8,9 +8,7 @@
              x:Class="Homework_12_Valves.Controls.ExclusiveOrNotControl">
     
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <vm:ExclusiveOrNotControlViewModel Height="100" Width="50" Stroke="Black" StrokeThickness="1"/>
+        <vm:ExclusiveOrNotControlViewModel TypeValve="" Height="100" Width="50" Stroke="Black" StrokeThickness="1"/>
     </StackPanel>
-    
-    
     
 </UserControl>

@@ -1,10 +1,11 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Homework_11_CustomTable.ViewModels;
-using Homework_11_CustomTable.Views;
 
-namespace Homework_11_CustomTable;
+using hw_11.ViewModels;
+using hw_11.Views;
+
+namespace hw_11;
 
 public partial class App : Application
 {
@@ -19,7 +20,14 @@ public partial class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = new MainViewModel()
+            };
+        }
+        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+        {
+            singleViewPlatform.MainView = new MainView
+            {
+                DataContext = new MainViewModel()
             };
         }
 

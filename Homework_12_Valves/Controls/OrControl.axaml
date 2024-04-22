@@ -8,7 +8,7 @@
              x:Class="Homework_12_Valves.Controls.OrControl">
     
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <vm:OrControlViewModel Height="100" Width="50" Stroke="Black" StrokeThickness="1"/>
+        <vm:OrControlViewModel TypeValve="" Height="100" Width="50" Stroke="Black" StrokeThickness="1"/>
     </StackPanel>
     
 </UserControl>

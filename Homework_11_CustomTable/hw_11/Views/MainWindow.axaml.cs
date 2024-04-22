@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls;
 
-namespace Homework_11_CustomTable.Views;
+namespace hw_11.Views;
 
 public partial class MainWindow : Window
 {

@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Globalization;
+using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 
 namespace Homework_12_Valves.ViewModels.ViewControls;
 public class InverterConrolViewModel : Control
 {
-    private double _radius = 6;
+    private double _radius = 4;
+    private bool _isSelected;
     public IBrush? Stroke { get; set; }
     public double StrokeThickness { get; set; }
     public string SetFonts { get; set; }
@@ -17,6 +20,7 @@ public class InverterConrolViewModel : Control
     public int SizeLabel { get; set; }
     public string LabelValve { get; set; }
     public string TypeValve { get; set; } // Type: GOST or ANSI 
+    public List<bool> InputStates { get; set; }
 
     public InverterConrolViewModel()
     {
@@ -27,6 +31,7 @@ public class InverterConrolViewModel : Control
         SetFonts = "Arial";
         TypeValve = "GOST";
         CountInput = 1;
+        InputStates = new List<bool>();
     }
     
     public sealed override void Render(DrawingContext context)
@@ -35,6 +40,10 @@ public class InverterConrolViewModel : Control
         
         // Set Fonts for text
         var typeface = new Typeface(SetFonts);
+        
+        // Set outline color based on selection
+        var outlineBrush = _isSelected ? Brushes.OrangeRed : Brushes.Black;
+        var outlinePen = new Pen(outlineBrush, StrokeThickness);
         
         if (TypeValve == "ANSI")
         {
@@ -48,21 +57,20 @@ public class InverterConrolViewModel : Control
             var point3 = new Point(centerX + sideLength / 2, centerY); // Right
 
             // Draw triangle-box
-            context.DrawLine(new Pen(Stroke, StrokeThickness), point1, point2);
-            context.DrawLine(new Pen(Stroke, StrokeThickness), point1, point3);
-            context.DrawLine(new Pen(Stroke, StrokeThickness), point2, point3);
+            context.DrawLine(outlinePen, point1, point2);
+            context.DrawLine(outlinePen, point1, point3);
+            context.DrawLine(outlinePen, point2, point3);
             
             // Draw Circle-output
-            context.DrawEllipse(null, new Pen(Stroke, StrokeThickness), new Rect(centerX + sideLength / 2 - _radius - 2, centerY - _radius - 2, (_radius + 2) * 2, (_radius + 2) * 2));
-            context.DrawEllipse(Brushes.Red, new Pen(Stroke, StrokeThickness), new Rect(centerX + sideLength / 2 - _radius, centerY - _radius, _radius * 2, _radius * 2));
+            context.DrawEllipse(null, outlinePen, new Rect(centerX + sideLength / 2 - _radius - 2, centerY - _radius - 2, (_radius + 2) * 2, (_radius + 2) * 2));
+            context.DrawEllipse(Brushes.Red, outlinePen, new Rect(centerX + sideLength / 2 - _radius, centerY - _radius, _radius * 2, _radius * 2));
             
             // Draw Circle-input
             var x1 = 0;
             var y1 = renderSize.Height / 2;
-            context.DrawEllipse(Brushes.Blue, new Pen(Stroke, StrokeThickness), new Rect(x1 - _radius, y1 - _radius, _radius * 2, _radius * 2));
+            context.DrawEllipse(Brushes.Blue, outlinePen, new Rect(x1 - _radius, y1 - _radius, _radius * 2, _radius * 2));
             
             // Set Label valve
-            // Problem: there is no adaptability to the length of the text
             var posLabelX = 0; // Value varies 
             var posLabelY = renderSize.Height + 5;
             var labelText = new FormattedText(
@@ -71,35 +79,21 @@ public class InverterConrolViewModel : Control
                 FlowDirection.LeftToRight,
                 typeface,
                 SizeLabel,
-                Brushes.Black);
-            context.DrawText(labelText, new Point(posLabelX, posLabelY));
+                outlineBrush);
             
-            // Problem: The maximum number of inputs is 6. It is no longer possible
-            /*
-            double interval = 10;
-            for (int i = 0; i < CountInput; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    context.DrawEllipse(Brushes.Blue, new Pen(Stroke, StrokeThickness), new Rect(0 - _radius, sideLength / 2 - interval - _radius, _radius * 2, _radius * 2));
-                }
-                else
-                {
-                    context.DrawEllipse(Brushes.Blue, new Pen(Stroke, StrokeThickness), new Rect(0 - _radius, sideLength / 2 + interval - _radius, _radius * 2, _radius * 2));
-                }
+            string labelSize = LabelValve;
+            int lsize = labelSize.Length;
 
-                interval += 9;
-            }
-            */
+            context.DrawText(labelText,
+                lsize <= 4 ? new Point(lsize, posLabelY) : new Point(posLabelX - lsize * 2, posLabelY));
         }
         else
         {
             // Rectangle-Box 
             var rect = new Rect(renderSize);
-            context.DrawRectangle(null, new Pen(Stroke, StrokeThickness), rect);
+            context.DrawRectangle(Brushes.White, outlinePen, rect);
         
             // Set Header valve
-            // Problem: there is no adaptability to the length of the text
             var posHeaderX = renderSize.Width / 3;
             var posHeaderY = 4; // Value varies 
             var headerText = new FormattedText(
@@ -108,11 +102,10 @@ public class InverterConrolViewModel : Control
                 FlowDirection.LeftToRight,
                 typeface,
                 SizeHeader,
-                Brushes.Black);
+                outlineBrush);
             context.DrawText(headerText, new Point(posHeaderX, posHeaderY));
         
             // Set Label valve
-            // Problem: there is no adaptability to the length of the text
             var posLabelX = 0; // Value varies 
             var posLabelY = renderSize.Height + 5;
             var labelText = new FormattedText(
@@ -121,44 +114,38 @@ public class InverterConrolViewModel : Control
                 FlowDirection.LeftToRight,
                 typeface,
                 SizeLabel,
-                Brushes.Black);
-            context.DrawText(labelText, new Point(posLabelX, posLabelY));
+                outlineBrush);
+            
+            string labelSize = LabelValve;
+            int lsize = labelSize.Length;
+
+            context.DrawText(labelText,
+                lsize <= 4 ? new Point(lsize, posLabelY) : new Point(posLabelX - lsize * 2 + 10, posLabelY));
             
             // Draw left circle-input
             var x2 = renderSize.Width;
             var y2 = renderSize.Height / 2;
-            context.DrawEllipse(null, new Pen(Stroke, StrokeThickness), new Rect(x2 - _radius - 2, y2 - _radius - 2, (_radius + 2) * 2, (_radius + 2) * 2));
-            context.DrawEllipse(Brushes.Red, new Pen(Stroke, StrokeThickness), new Rect(x2 - _radius, y2 - _radius, _radius * 2, _radius * 2));
+            context.DrawEllipse(null, outlinePen, new Rect(x2 - _radius - 2, y2 - _radius - 2, (_radius + 2) * 2, (_radius + 2) * 2));
+            context.DrawEllipse(Brushes.Red, outlinePen, new Rect(x2 - _radius, y2 - _radius, _radius * 2, _radius * 2));
             
             // Draw Circle-input
-            // Problem: The maximum number of inputs is 6. It is no longer possible
             var x1 = 0;
             var y1 = renderSize.Height / 2;
-            context.DrawEllipse(Brushes.Blue, new Pen(Stroke, StrokeThickness), new Rect(x1 - _radius, y1 - _radius, _radius * 2, _radius * 2));
-            /*
-            double interval = 10;
-            for (int i = 0; i < CountInput; i++)
-            {
-                if (CountInput == 1)
-                {
-                    
-                }
-                
-                if (i % 2 == 0)
-                {
-                    context.DrawEllipse(Brushes.Blue, new Pen(Stroke, StrokeThickness), new Rect(x1 - _radius, y1 - interval - _radius, _radius * 2, _radius * 2));
-                }
-                else
-                {
-                    context.DrawEllipse(Brushes.Blue, new Pen(Stroke, StrokeThickness), new Rect(x1 - _radius, y1 + interval - _radius, _radius * 2, _radius * 2));
-                }
-
-                interval += 9;
-            }
-            */
-            
+            context.DrawEllipse(Brushes.Blue, outlinePen, new Rect(x1 - _radius, y1 - _radius, _radius * 2, _radius * 2));
         }
         
         base.Render(context);
+    }
+    
+    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    {
+        base.OnPointerPressed(e);
+            
+        var point = e.GetPosition(this);
+        if (Bounds.Contains(point))
+        {
+            _isSelected = !_isSelected;
+            InvalidateVisual();
+        }
     }
 }

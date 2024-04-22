@@ -1,4 +1,4 @@
-﻿namespace Homework_11_CustomTable.Models;
+﻿namespace hw_11.Entities;
 
 public class User
 {

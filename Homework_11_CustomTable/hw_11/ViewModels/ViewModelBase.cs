@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 
-namespace Homework_11_CustomTable.ViewModels;
+namespace hw_11.ViewModels;
 
 public class ViewModelBase : ReactiveObject
 {

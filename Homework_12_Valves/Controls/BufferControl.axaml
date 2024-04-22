@@ -8,7 +8,7 @@
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="200">
 	
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-		<vm:BufferControlViewModel TypeValve="GOST" Height="100" Width="50" Stroke="Black" StrokeThickness="1"/>
+		<vm:BufferControlViewModel TypeValve="ANSI" Height="100" Width="50" Stroke="Black" StrokeThickness="1"/>
 	</StackPanel>
 	
 </UserControl>
