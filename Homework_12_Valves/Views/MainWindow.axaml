@@ -16,6 +16,9 @@
 
     <StackPanel VerticalAlignment="Center">
         <valves:AndControlViewModel TypeValve="ANSI" Height="100" Width="50" Stroke="Black" StrokeThickness="1"/>
+        <valves:AndNotControlViewModel TypeValve="ANSI" Height="100" Width="50" Stroke="Black" StrokeThickness="1"/>
+        <valves:OrControlViewModel TypeValve="ANSI" Height="100" Width="50" Stroke="Black" StrokeThickness="1"/>
+        <valves:ExclusiveOrNotControlViewModel TypeValve="ANSI" Height="100" Width="50" Stroke="Black" StrokeThickness="1"/>
     </StackPanel>
     
 

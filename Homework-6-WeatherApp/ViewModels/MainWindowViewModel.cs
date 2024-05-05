@@ -63,17 +63,17 @@ public class MainWindowViewModel : ViewModelBase
         return weather.Take(Math.Min(5, weather.Count)).ToList();
     }
 
-    private List<ShowContentViewModel.WeatherVariable>? GetWeatherDay()
+    private List<ShowContentViewModel.WeatherVariable>? GetWeatherDay() 
     {
         if (weather == null || weather.Count == 0)
         {
             return null;
         }
 
-        var groupedDate = weather.GroupBy(w => w.Date.Value.Day);
-        var uDate = groupedDate.Select(g => g.First()).ToList();
+            var groupedDate = weather.GroupBy(w => w.Date.Value.Day);
+            var uDate = groupedDate.Select(g => g.First()).ToList();
 
-        return uDate;
+            return uDate;
     }
 
     public async Task ExecuteSearch()

@@ -9,8 +9,11 @@ namespace Homework_LogicalApp.Controls;
 
 public class OrControl : Control
 {
-    private double _radius = 5;
+    private const double Radius = 5;
     private bool _isSelected;
+    private bool _isPressed; 
+    private Point _positionInBlock;
+    private TranslateTransform _transform = null!;
     public IBrush? Stroke { get; set; }
     public double StrokeThickness { get; set; }
     public string SetFonts { get; set; }
@@ -20,14 +23,13 @@ public class OrControl : Control
     public int SizeLabel { get; set; }
     public string LabelValve { get; set; }
     public string TypeValve { get; set; } // Type: GOST or ANSI 
-    public List<bool> InputStates { get; set; }
 
     public OrControl()
     {
         Width = 50;
         Height = 100;
         Stroke = Brushes.Black;
-        StrokeThickness = 1;
+        StrokeThickness = 2;
         SizeHeader = 20;
         SizeLabel = 18;
         HeaderValve = "1";
@@ -35,7 +37,6 @@ public class OrControl : Control
         SetFonts = "Arial";
         TypeValve = "GOST";
         CountInput = 2;
-        InputStates = new List<bool>();
     }
     
     public sealed override void Render(DrawingContext context)
@@ -126,8 +127,8 @@ public class OrControl : Control
 
                 context.DrawEllipse(Brushes.Blue, outlinePen,
                     i % 2 == 0
-                        ? new Rect(x1 - _radius, y1 - interval - _radius, _radius * 2, _radius * 2)
-                        : new Rect(x1 - _radius, y1 + interval - _radius, _radius * 2, _radius * 2));
+                        ? new Rect(x1 - Radius, y1 - interval - Radius, Radius * 2, Radius * 2)
+                        : new Rect(x1 - Radius, y1 + interval - Radius, Radius * 2, Radius * 2));
 
                 interval += 8;
             }
@@ -135,7 +136,7 @@ public class OrControl : Control
             // Draw output-point
             var x2 = 70;
             var y2 = 44; 
-            context.DrawEllipse(Brushes.Red, outlinePen, new Rect(x2 - _radius, y2 - _radius, _radius * 2, _radius * 2));
+            context.DrawEllipse(Brushes.Red, outlinePen, new Rect(x2 - Radius, y2 - Radius, Radius * 2, Radius * 2));
         }
         else
         {
@@ -176,7 +177,7 @@ public class OrControl : Control
             // Draw left circle-input
             var x2 = renderSize.Width;
             var y2 = renderSize.Height / 2;
-            context.DrawEllipse(Brushes.Red, outlinePen, new Rect(x2 - _radius, y2 - _radius, _radius * 2, _radius * 2));
+            context.DrawEllipse(Brushes.Red, outlinePen, new Rect(x2 - Radius, y2 - Radius, Radius * 2, Radius * 2));
             
             // Draw Circle-input
             // Problem: The maximum number of inputs is 6. It is no longer possible
@@ -194,8 +195,8 @@ public class OrControl : Control
 
                 context.DrawEllipse(Brushes.Blue, outlinePen,
                     i % 2 == 0
-                        ? new Rect(x1 - _radius, y1 - interval - _radius, _radius * 2, _radius * 2)
-                        : new Rect(x1 - _radius, y1 + interval - _radius, _radius * 2, _radius * 2));
+                        ? new Rect(x1 - Radius, y1 - interval - Radius, Radius * 2, Radius * 2)
+                        : new Rect(x1 - Radius, y1 + interval - Radius, Radius * 2, Radius * 2));
 
                 interval += 9;
             }
@@ -206,13 +207,45 @@ public class OrControl : Control
     
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
-        base.OnPointerPressed(e);
+        if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonPressed) return;
+        _isSelected = !_isSelected;
+        InvalidateVisual();
+        e.Handled = true;
+        
+        _isPressed = true;
+        _positionInBlock = e.GetPosition(Parent as Visual);
             
-        var point = e.GetPosition(this);
-        if (Bounds.Contains(point))
-        {
-            _isSelected = !_isSelected;
-            InvalidateVisual();
-        }
+        if (_transform != null!) 
+            _positionInBlock = new Point(
+                _positionInBlock.X - _transform.X,
+                _positionInBlock.Y - _transform.Y);
+        
+        base.OnPointerPressed(e);
+    }
+
+    protected override void OnPointerReleased(PointerReleasedEventArgs e)
+    {
+        _isPressed = false;
+            
+        base.OnPointerReleased(e);
+    }
+
+    protected override void OnPointerMoved(PointerEventArgs e)
+    {
+        if (!_isPressed)
+            return;
+            
+        if (Parent == null)
+            return;
+
+        var currentPosition = e.GetPosition(Parent as Visual);
+
+        var offsetX = currentPosition.X -  _positionInBlock.X;
+        var offsetY = currentPosition.Y - _positionInBlock.Y;
+
+        _transform = new TranslateTransform(offsetX, offsetY);
+        RenderTransform = _transform;
+            
+        base.OnPointerMoved(e);
     }
 }

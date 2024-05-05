@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Controls;
@@ -10,8 +9,11 @@ namespace Homework_LogicalApp.Controls;
 
 public class BufferControl : Control
 {
-    private double _radius = 4;
+    private const double Radius = 4;
     private bool _isSelected;
+    private bool _isPressed; 
+    private Point _positionInBlock;
+    private TranslateTransform _transform = null!;
     public IBrush? Stroke { get; set; }
     public double StrokeThickness { get; set; }
     public string SetFonts { get; set; }
@@ -21,14 +23,13 @@ public class BufferControl : Control
     public int SizeLabel { get; set; }
     public string LabelValve { get; set; }
     public string TypeValve { get; set; } // Type: GOST or ANSI 
-    public List<bool> InputStates { get; set; }
 
     public BufferControl()
     {
         Width = 50;
         Height = 100;
         Stroke = Brushes.Black;
-        StrokeThickness = 1;
+        StrokeThickness = 2;
         SizeHeader = 20;
         SizeLabel = 18;
         HeaderValve = "1";
@@ -36,7 +37,6 @@ public class BufferControl : Control
         SetFonts = "Arial";
         TypeValve = "GOST";
         CountInput = 1;
-        InputStates = new List<bool>();
     }
 
     public sealed override void Render(DrawingContext context)
@@ -60,19 +60,26 @@ public class BufferControl : Control
             var point1 = new Point(0, 0); // Up
             var point2 = new Point(0, sideLength); // Down
             var point3 = new Point(centerX + sideLength / 2, centerY); // Right
-
+            
+            var points = new List<Point>
+            {
+                new Point(0, 0),
+                new Point(0, sideLength),
+                new Point(centerX + sideLength / 2, centerY)
+            };
+            
             // Draw triangle-box
             context.DrawLine(outlinePen, point1, point2);
             context.DrawLine(outlinePen, point1, point3);
             context.DrawLine(outlinePen, point2, point3);
 
             // Draw Circle-output
-            context.DrawEllipse(Brushes.Red, outlinePen, new Rect(centerX + sideLength / 2 - _radius, centerY - _radius, _radius * 2, _radius * 2));
+            context.DrawEllipse(Brushes.Red, outlinePen, new Rect(centerX + sideLength / 2 - Radius, centerY - Radius, Radius * 2, Radius * 2));
 
             // Draw Circle-input
             var x1 = 0;
             var y1 = renderSize.Height / 2;
-            context.DrawEllipse(Brushes.Blue, outlinePen, new Rect(x1 - _radius, y1 - _radius, _radius * 2, _radius * 2));
+            context.DrawEllipse(Brushes.Blue, outlinePen, new Rect(x1 - Radius, y1 - Radius, Radius * 2, Radius * 2));
 
             // Set Label valve
             var posLabelX = 0; // Value varies 
@@ -130,26 +137,58 @@ public class BufferControl : Control
             // Draw left circle-input
             var x2 = renderSize.Width;
             var y2 = renderSize.Height / 2;
-            context.DrawEllipse(Brushes.Red, outlinePen, new Rect(x2 - _radius, y2 - _radius, _radius * 2, _radius * 2));
+            context.DrawEllipse(Brushes.Red, outlinePen, new Rect(x2 - Radius, y2 - Radius, Radius * 2, Radius * 2));
 
             // Draw Circle-input
             var x1 = 0;
             var y1 = renderSize.Height / 2;
-            context.DrawEllipse(Brushes.Blue, outlinePen, new Rect(x1 - _radius, y1 - _radius, _radius * 2, _radius * 2));
+            context.DrawEllipse(Brushes.Blue, outlinePen, new Rect(x1 - Radius, y1 - Radius, Radius * 2, Radius * 2));
         }
 
         base.Render(context);
     }
-
+    
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
-        base.OnPointerPressed(e);
+        if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonPressed) return;
+        _isSelected = !_isSelected;
+        InvalidateVisual();
         
-        var point = e.GetPosition(this);
-        if (Bounds.Contains(point))
-        {
-            _isSelected = !_isSelected;
-            InvalidateVisual();
-        }
+        e.Handled = true;
+        _isPressed = true;
+        _positionInBlock = e.GetPosition(Parent as Visual);
+            
+        if (_transform != null!) 
+            _positionInBlock = new Point(
+                _positionInBlock.X - _transform.X,
+                _positionInBlock.Y - _transform.Y);
+        
+        base.OnPointerPressed(e);
     }
+
+    protected override void OnPointerReleased(PointerReleasedEventArgs e)
+    {
+        _isPressed = false;
+            
+        base.OnPointerReleased(e);
+    }
+
+    protected override void OnPointerMoved(PointerEventArgs e)
+    {
+        if (!_isPressed)
+            return;
+            
+        if (Parent == null)
+            return;
+
+        var currentPosition = e.GetPosition(Parent as Visual);
+        var offsetX = currentPosition.X -  _positionInBlock.X;
+        var offsetY = currentPosition.Y - _positionInBlock.Y;
+
+        _transform = new TranslateTransform(offsetX, offsetY);
+        RenderTransform = _transform;
+            
+        base.OnPointerMoved(e);
+    }
+    
 }
