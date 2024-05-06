@@ -12,7 +12,8 @@ public class Connector : Control
 { 
     //private List<Point> Points { get; set; }
     
-    // Получаю первоначальные координаты / нет новых
+    // Получаю первоначальные координаты спавна
+    // Цель: получение динамических координат
     public void Connect(Connector? obj)
     {
         if (obj == null) return;
@@ -21,8 +22,17 @@ public class Connector : Control
         var posY = obj.Bounds.Y;
 
         var point = new Point(posX, posY);
-        
+
         Console.WriteLine($"x = {posX} | Y = {posY}");
     }
-    
+
+    public void Draw(DrawingContext context)
+    {
+        var renderSize = Bounds.Size;
+        
+        var brush = Brushes.Blue;
+        var pen = new Pen(brush, 1);
+        var rect = new Rect(0, 0, renderSize.Width, renderSize.Height);
+        context.DrawRectangle(brush, pen, rect);
+    }
 }
