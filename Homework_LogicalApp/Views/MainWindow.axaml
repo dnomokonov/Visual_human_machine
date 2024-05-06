@@ -20,6 +20,8 @@
         
         <cc:BufferControl />
         
+        <cc:AndControl />
+        
     </StackPanel>
     
 </Window>

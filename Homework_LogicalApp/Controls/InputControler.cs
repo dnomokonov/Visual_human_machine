@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Homework_LogicalApp.Controls;
 
-public class InputControler : Control
+public class InputControler : Connector
 {
     private const double Radius = 5;
     private bool _isSelected;
@@ -107,12 +107,6 @@ public class InputControler : Control
         
         double clickX = e.GetPosition(this).X;
         int clickedIndex = (int)Math.Floor((clickX - 10) / 18); // Assuming the interval is 18 and the first element starts at position 10
-
-        if (BoolArray != null && clickedIndex >= 0 && clickedIndex < BoolArray.Count)
-        {
-            BoolArray[clickedIndex] = !BoolArray[clickedIndex];
-            InvalidateVisual();
-        }
         
         e.Handled = true;
         _isPressed = true;
@@ -123,6 +117,16 @@ public class InputControler : Control
                 _positionInBlock.X - _transform.X,
                 _positionInBlock.Y - _transform.Y);
         
+        if (BoolArray != null && clickedIndex >= 0 && clickedIndex < BoolArray.Count)
+        {
+            BoolArray[clickedIndex] = !BoolArray[clickedIndex];
+            InvalidateVisual();
+        }
+        
+        if (e.ClickCount == 2)
+        {
+            Connect(this);
+        }
         
         InvalidateVisual();
         base.OnPointerPressed(e);

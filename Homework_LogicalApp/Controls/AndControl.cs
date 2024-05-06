@@ -8,7 +8,7 @@ using Avalonia.Media;
 
 namespace Homework_LogicalApp.Controls;
 
-public class AndControl : Control
+public class AndControl : Connector
 {
     private const double Radius = 4;
     private bool _isSelected;
@@ -203,6 +203,12 @@ public class AndControl : Control
             _positionInBlock = new Point(
                 _positionInBlock.X - _transform.X,
                 _positionInBlock.Y - _transform.Y);
+
+        if (e.ClickCount == 2)
+        {
+            Connect(this);
+        }
+        
         
         base.OnPointerPressed(e);
     }
