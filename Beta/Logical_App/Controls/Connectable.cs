@@ -25,6 +25,7 @@ namespace Homework_LogicalApp.Controls
         public Connectable? input_el = null;
 
         public bool IsSelected { get; set; } = false;
+        public int CountInput { get; set; } = 3;
         public Point Position { get; set; }
 
         public override void Render(DrawingContext context)

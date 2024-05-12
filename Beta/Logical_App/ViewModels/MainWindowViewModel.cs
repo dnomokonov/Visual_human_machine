@@ -9,8 +9,8 @@ public class MainWindowViewModel : ViewModelBase
     public ObservableCollection<Connectable> Items { get; set; } = new ObservableCollection<Connectable>();
     public ObservableCollection<Connectable> Examples { get; set; } = new ObservableCollection<Connectable>()
     {
-        new InputControler(GetId(), new Avalonia.Point(10, 0)),
-        new OutputControler(GetId(),new Avalonia.Point(10, 0)),
+        new InputControler(GetId(), new Avalonia.Point(0, 5)),
+        new OutputControler(GetId(),new Avalonia.Point(0, 5)),
         new BufferControl(GetId(), new Avalonia.Point(10, 0)),
         new InverterConrol(GetId(), new Avalonia.Point(10, 0)),
         new AndControl(GetId(), new Avalonia.Point(10, 0)),

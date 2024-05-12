@@ -12,7 +12,6 @@ namespace Homework_LogicalApp.Controls;
 
 public class OutputControler : Connectable
 {
-    public int CountInput { get; set; } = 1;
     public double SizeFonts { get; set; } = 20;
     public IBrush? Stroke { get; set; }
     public double StrokeThickness { get; set; }

@@ -16,7 +16,6 @@ public partial class InputControler : Connectable, ILogicalControl
     private const double Radius = 5;
     private Point _positionInBlock;
     private TranslateTransform _transform = null!;
-    public int CountInput { get; set; }
     
     public IBrush? Stroke { get; set; }
     public double StrokeThickness { get; set; }
@@ -31,7 +30,6 @@ public partial class InputControler : Connectable, ILogicalControl
         StrokeThickness = 2;
         SetFonts = "Arial";
         SizeFonts = 20;
-        CountInput = 3;
         
         BoolArrayOut = new ObservableCollection<bool>(Enumerable.Repeat(false, CountInput));
     }
@@ -48,7 +46,7 @@ public partial class InputControler : Connectable, ILogicalControl
         var outlinePen = new Pen(outlineBrush, StrokeThickness);
         
         // Checking for the number of elements
-        if (CountInput is <= 0 or > 7)
+        if (CountInput is <= 0 or > 5)
         {
             CountInput = 1;
         }

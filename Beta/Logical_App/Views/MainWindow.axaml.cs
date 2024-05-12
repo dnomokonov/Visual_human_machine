@@ -19,6 +19,7 @@ using Homework_LogicalApp.Models;
 using Avalonia.Platform.Storage;
 using System.IO;
 using System.Threading.Tasks;
+using DynamicData;
 
 namespace Homework_LogicalApp.Views;
 
@@ -53,8 +54,7 @@ public partial class MainWindow : Window
         {
             cnv.Children.Add(item);
         }
-
-        // Добавление из списка в меню
+        
         exampleLb.DoubleTapped += (s, e) =>
         {
             if (exampleLb.SelectedItem == null) return;
@@ -75,8 +75,7 @@ public partial class MainWindow : Window
                 }
             }
         };
-
-        // Классно, круто, костыльно, зато REACTIVE UI
+        
         var intervalObservable = Observable.Interval(TimeSpan.FromMilliseconds(50))
             .Select(_ => Unit.Default);
 
@@ -98,6 +97,10 @@ public partial class MainWindow : Window
     protected override void OnKeyDown(KeyEventArgs e)
     {
         base.OnKeyDown(e);
+        
+        if (DataContext is not MainWindowViewModel viewModel) return;
+        var item = GetClickedComponent();
+        
         if(e.Key == Key.Escape)
         {
             if(activeItem != null)
@@ -111,8 +114,33 @@ public partial class MainWindow : Window
                 connectableFirst = null;
             }
         }
-    }
 
+        if (e.Key == Key.Delete)
+        {
+            if (item == null) return;
+            viewModel.Items.Remove(item);
+            canv.Children.Remove(item);
+        }
+
+        if (e.Key == Key.Q)
+        {
+            if (item == null) return;
+            if (item.CountInput is < 3 and >= 1)
+            {
+                item.CountInput += 1;
+            }
+        }
+        
+        if (e.Key == Key.W)
+        {
+            if (item == null) return;
+            if (item.CountInput is <= 3 and > 1)
+            {
+                item.CountInput -= 1;
+            }
+        }
+    }
+    
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
         base.OnPointerPressed(e);
@@ -121,7 +149,6 @@ public partial class MainWindow : Window
         var pointer = e.GetCurrentPoint(this);
         var item = GetClickedComponent();
         
-        // Двигать провода это плохая затея
         if (item is Connector) return;
 
         if (pointer.Properties.IsRightButtonPressed)

@@ -26,11 +26,11 @@
 
     <!-- ListBox within Canvas with specified size and alignment -->
     
-    <ListBox x:Name="ExamplesLb" ItemsSource="{Binding Path=Examples}" Width="150"
+    <ListBox x:Name="ExamplesLb" ItemsSource="{Binding Path=Examples}" Width="180"
              Canvas.Left="0" Canvas.Top="30">
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
-          <WrapPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+          <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </ItemsPanelTemplate>
       </ListBox.ItemsPanel>
     </ListBox>
