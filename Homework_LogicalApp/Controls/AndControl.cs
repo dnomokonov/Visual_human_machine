@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -8,12 +10,13 @@ using Avalonia.Media;
 
 namespace Homework_LogicalApp.Controls;
 
+<<<<<<< HEAD
 public class AndControl : Control
+=======
+public class AndControl : Connectable
+>>>>>>> 48e46be (main logical_app)
 {
     private const double Radius = 4;
-    private bool _isSelected;
-    private bool _isPressed; 
-    private Point _positionInBlock;
     private TranslateTransform _transform = null!;
     public IBrush? Stroke { get; set; }
     public double StrokeThickness { get; set; }
@@ -26,8 +29,7 @@ public class AndControl : Control
     public string TypeValve { get; set; } // Type: GOST or ANSI
     public List<bool> InputStates { get; set; }
     
-    
-    public AndControl()
+    public AndControl(int id, Point? p = null) : base(id, p)
     {
         Width = 50;
         Height = 100;
@@ -51,7 +53,7 @@ public class AndControl : Control
         var typeface = new Typeface(SetFonts);
         
         // Set outline color based on selection
-        var outlineBrush = _isSelected ? Brushes.OrangeRed : Brushes.Black;
+        var outlineBrush = IsSelected ? Brushes.OrangeRed : Brushes.Black;
         var outlinePen = new Pen(outlineBrush, StrokeThickness);
         
         if (TypeValve == "ANSI")
@@ -189,13 +191,14 @@ public class AndControl : Control
         base.Render(context);
     }
     
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    // My temporary crutch :D
+    private ObservableCollection<bool> TempArray { get; set; } = new ObservableCollection<bool>();
+    
+    public override ObservableCollection<bool> GetOutput(ObservableCollection<bool> input)
     {
-        if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonPressed) return;
-        _isSelected = !_isSelected;
-        InvalidateVisual();
-        e.Handled = true;
+        if(input_el == null) return new ObservableCollection<bool> { };
         
+<<<<<<< HEAD
         _isPressed = true;
         _positionInBlock = e.GetPosition(Parent as Visual);
             
@@ -231,5 +234,15 @@ public class AndControl : Control
         RenderTransform = _transform;
             
         base.OnPointerMoved(e);
+=======
+        if (TempArray.Count == 0) {
+            TempArray = input_el.BoolArrayOut; // It only works for two inputs
+            return new ObservableCollection<bool>(input_el.BoolArrayOut);
+        }
+        
+        var result = TempArray.Zip(input_el.BoolArrayOut, (x, y) => x && y);
+    
+        return new ObservableCollection<bool>(result);
+>>>>>>> 48e46be (main logical_app)
     }
 }

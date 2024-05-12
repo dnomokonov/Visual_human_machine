@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Media;
 
 namespace Homework_LogicalApp.Controls;
 
+<<<<<<< HEAD
 public class BufferControl : Control
+=======
+public class BufferControl : Connectable
+>>>>>>> 48e46be (main logical_app)
 {
     private const double Radius = 4;
-    private bool _isSelected;
-    private bool _isPressed; 
-    private Point _positionInBlock;
     private TranslateTransform _transform = null!;
     public IBrush? Stroke { get; set; }
     public double StrokeThickness { get; set; }
@@ -24,7 +24,7 @@ public class BufferControl : Control
     public string LabelValve { get; set; }
     public string TypeValve { get; set; } // Type: GOST or ANSI 
 
-    public BufferControl()
+    public BufferControl(int id, Point? p = null) : base(id, p)
     {
         Width = 50;
         Height = 100;
@@ -47,7 +47,7 @@ public class BufferControl : Control
         var typeface = new Typeface(SetFonts);
 
         // Set outline color based on selection
-        var outlineBrush = _isSelected ? Brushes.OrangeRed : Brushes.Black;
+        var outlineBrush = IsSelected ? Brushes.OrangeRed : Brushes.Black;
         var outlinePen = new Pen(outlineBrush, StrokeThickness);
 
         if (TypeValve == "ANSI")
@@ -148,8 +148,9 @@ public class BufferControl : Control
         base.Render(context);
     }
     
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    public override ObservableCollection<bool> GetOutput(ObservableCollection<bool> input)
     {
+<<<<<<< HEAD
         if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonPressed) return;
         _isSelected = !_isSelected;
         InvalidateVisual();
@@ -189,6 +190,11 @@ public class BufferControl : Control
         RenderTransform = _transform;
             
         base.OnPointerMoved(e);
+=======
+        if(input_el == null) return new ObservableCollection<bool> { };
+
+        return new ObservableCollection<bool>(input_el.BoolArrayOut);
+>>>>>>> 48e46be (main logical_app)
     }
     
 }

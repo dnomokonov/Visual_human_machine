@@ -6,25 +6,27 @@ using Avalonia.Input;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Avalonia.VisualTree;
+using System.Collections.ObjectModel;
 
 namespace Homework_LogicalApp.Controls;
 
+<<<<<<< HEAD
 public class InputControler : Control
+=======
+public partial class InputControler : Connectable, ILogicalControl
+>>>>>>> 48e46be (main logical_app)
 {
     private const double Radius = 5;
-    private bool _isSelected;
-    private bool _isPressed; 
     private Point _positionInBlock;
     private TranslateTransform _transform = null!;
-    public int CountInput { get; set; }
-    public List<bool>? BoolArray { get; set; }
     
     public IBrush? Stroke { get; set; }
     public double StrokeThickness { get; set; }
     public string SetFonts { get; set; }
     public double SizeFonts { get; set; }
     
-    public InputControler()
+    public InputControler(int id, Point? p = null) : base(id, p)
     {
         Width = 60;
         Height = 30;
@@ -32,10 +34,8 @@ public class InputControler : Control
         StrokeThickness = 2;
         SetFonts = "Arial";
         SizeFonts = 20;
-        _isSelected = false;
-        CountInput = 3;
         
-        BoolArray = new List<bool>(Enumerable.Repeat(false, CountInput));
+        BoolArrayOut = new ObservableCollection<bool>(Enumerable.Repeat(false, CountInput));
     }
 
     public sealed override void Render(DrawingContext context)
@@ -46,11 +46,11 @@ public class InputControler : Control
         var typeface = new Typeface(SetFonts);
 
         // Set outline color based on selection
-        var outlineBrush = _isSelected ? Brushes.OrangeRed : Brushes.Black;
+        var outlineBrush = IsSelected ? Brushes.OrangeRed : Brushes.Black;
         var outlinePen = new Pen(outlineBrush, StrokeThickness);
         
         // Checking for the number of elements
-        if (CountInput is <= 0 or > 7)
+        if (CountInput is <= 0 or > 5)
         {
             CountInput = 1;
         }
@@ -61,7 +61,7 @@ public class InputControler : Control
         using (var geometryContext = geometry.Open())
         {
             geometryContext.BeginFigure(new Point(0, 0), isFilled: true);
-            geometryContext.LineTo(new Point( d, 0));
+            geometryContext.LineTo(new Point(d, 0));
             geometryContext.LineTo(new Point(d + 20, renderSize.Height / 2));
             geometryContext.LineTo(new Point(d, renderSize.Height));
             geometryContext.LineTo(new Point(0, renderSize.Height)); 
@@ -79,8 +79,8 @@ public class InputControler : Control
         var brushFalse = Brushes.DarkGreen;
         for (var i = 0; i < CountInput; i++)
         {
-            string boolText = BoolArray != null && BoolArray[i] ? "1" : "0";
-            var colorText = BoolArray != null && BoolArray[i] ? brushTrue : brushFalse;
+            string boolText = BoolArrayOut != null && BoolArrayOut[i] ? "1" : "0";
+            var colorText = BoolArrayOut != null && BoolArrayOut[i] ? brushTrue : brushFalse;
 
             var ftext = new FormattedText(
                 boolText,
@@ -90,32 +90,39 @@ public class InputControler : Control
                 SizeFonts,
                 Brushes.White
             );
-            
-            context.DrawEllipse(colorText, null, new Rect(interval - 2, renderSize.Height / 6, 15, 22));
-            context.DrawText(ftext,new Point(interval, renderSize.Height / 6));
+
+            context.DrawEllipse(colorText, null,
+                new Rect(new Point(interval - 2, renderSize.Height / 6), new Size(15, 22)));
+
+            context.DrawText(ftext, new Point(interval, renderSize.Height / 6));
 
             interval += 18;
         }
-        
     }
-    
+
+
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
         if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonPressed) return;
         
-        //_isSelected = !_isSelected; // Temporarily commented out
-        
         double clickX = e.GetPosition(this).X;
+<<<<<<< HEAD
         int clickedIndex = (int)Math.Floor((clickX - 10) / 18); // Assuming the interval is 18 and the first element starts at position 10
 
         if (BoolArray != null && clickedIndex >= 0 && clickedIndex < BoolArray.Count)
         {
             BoolArray[clickedIndex] = !BoolArray[clickedIndex];
+=======
+        int clickedIndex = (int)Math.Floor((clickX - 10) / 18); 
+
+        if (BoolArrayOut != null && clickedIndex >= 0 && clickedIndex < BoolArrayOut.Count)
+        {
+            BoolArrayOut[clickedIndex] = !BoolArrayOut[clickedIndex];
+>>>>>>> 48e46be (main logical_app)
             InvalidateVisual();
         }
         
         e.Handled = true;
-        _isPressed = true;
         _positionInBlock = e.GetPosition(Parent as Visual);
             
         if (_transform != null!) 
@@ -128,28 +135,8 @@ public class InputControler : Control
         base.OnPointerPressed(e);
     }
 
-    protected override void OnPointerReleased(PointerReleasedEventArgs e)
+    public override ObservableCollection<bool> GetOutput(ObservableCollection<bool> input)
     {
-        _isPressed = false;
-            
-        base.OnPointerReleased(e);
-    }
-
-    protected override void OnPointerMoved(PointerEventArgs e)
-    {
-        if (!_isPressed)
-            return;
-            
-        if (Parent == null)
-            return;
-
-        var currentPosition = e.GetPosition(Parent as Visual);
-        var offsetX = currentPosition.X -  _positionInBlock.X;
-        var offsetY = currentPosition.Y - _positionInBlock.Y;
-
-        _transform = new TranslateTransform(offsetX, offsetY);
-        RenderTransform = _transform;
-            
-        base.OnPointerMoved(e);
+        return BoolArrayOut;
     }
 }

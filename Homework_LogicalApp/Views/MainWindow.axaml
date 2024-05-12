@@ -10,10 +10,23 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Homework_LogicalApp">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+
+  <Canvas x:Name="canv">
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="_File">
+        <MenuItem Header="_Open..." x:Name="openBtn"/>
+        <MenuItem Header="Save..." x:Name="saveBtn"/>
+        <Separator/>
+        <MenuItem Header="_Exit"/>
+      </MenuItem>
+    </Menu>
+
+    <!-- ListBox within Canvas with specified size and alignment -->
     
+<<<<<<< HEAD
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         
         <cc:InputControler />
@@ -21,5 +34,17 @@
         <cc:BufferControl />
         
     </StackPanel>
+=======
+    <ListBox x:Name="ExamplesLb" ItemsSource="{Binding Path=Examples}" Width="180"
+             Canvas.Left="0" Canvas.Top="30">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+    </ListBox>
+>>>>>>> 48e46be (main logical_app)
     
+  </Canvas>
+
 </Window>
