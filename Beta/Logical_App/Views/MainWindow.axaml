@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Homework_LogicalApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cc="using:Homework_LogicalApp.Controls"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="550"
+        x:Class="Homework_LogicalApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Homework_LogicalApp">
+
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+
+  <Canvas x:Name="canv">
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="_File">
+        <MenuItem Header="_Open..." x:Name="openBtn"/>
+        <MenuItem Header="Save..." x:Name="saveBtn"/>
+        <Separator/>
+        <MenuItem Header="_Exit"/>
+      </MenuItem>
+    </Menu>
+
+    <!-- ListBox within Canvas with specified size and alignment -->
+    
+    <ListBox x:Name="ExamplesLb" ItemsSource="{Binding Path=Examples}" Width="150"
+             Canvas.Left="0" Canvas.Top="30">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <WrapPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+    </ListBox>
+    
+  </Canvas>
+
+</Window>
