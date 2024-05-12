@@ -11,11 +11,7 @@ using System.Collections.ObjectModel;
 
 namespace Homework_LogicalApp.Controls;
 
-<<<<<<< HEAD
-public class InputControler : Control
-=======
 public partial class InputControler : Connectable, ILogicalControl
->>>>>>> 48e46be (main logical_app)
 {
     private const double Radius = 5;
     private Point _positionInBlock;
@@ -106,19 +102,11 @@ public partial class InputControler : Connectable, ILogicalControl
         if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonPressed) return;
         
         double clickX = e.GetPosition(this).X;
-<<<<<<< HEAD
-        int clickedIndex = (int)Math.Floor((clickX - 10) / 18); // Assuming the interval is 18 and the first element starts at position 10
-
-        if (BoolArray != null && clickedIndex >= 0 && clickedIndex < BoolArray.Count)
-        {
-            BoolArray[clickedIndex] = !BoolArray[clickedIndex];
-=======
         int clickedIndex = (int)Math.Floor((clickX - 10) / 18); 
 
         if (BoolArrayOut != null && clickedIndex >= 0 && clickedIndex < BoolArrayOut.Count)
         {
             BoolArrayOut[clickedIndex] = !BoolArrayOut[clickedIndex];
->>>>>>> 48e46be (main logical_app)
             InvalidateVisual();
         }
         

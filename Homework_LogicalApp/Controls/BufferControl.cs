@@ -6,11 +6,7 @@ using Avalonia.Media;
 
 namespace Homework_LogicalApp.Controls;
 
-<<<<<<< HEAD
-public class BufferControl : Control
-=======
 public class BufferControl : Connectable
->>>>>>> 48e46be (main logical_app)
 {
     private const double Radius = 4;
     private TranslateTransform _transform = null!;
@@ -150,51 +146,9 @@ public class BufferControl : Connectable
     
     public override ObservableCollection<bool> GetOutput(ObservableCollection<bool> input)
     {
-<<<<<<< HEAD
-        if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonPressed) return;
-        _isSelected = !_isSelected;
-        InvalidateVisual();
-        
-        e.Handled = true;
-        _isPressed = true;
-        _positionInBlock = e.GetPosition(Parent as Visual);
-            
-        if (_transform != null!) 
-            _positionInBlock = new Point(
-                _positionInBlock.X - _transform.X,
-                _positionInBlock.Y - _transform.Y);
-        
-        base.OnPointerPressed(e);
-    }
-
-    protected override void OnPointerReleased(PointerReleasedEventArgs e)
-    {
-        _isPressed = false;
-            
-        base.OnPointerReleased(e);
-    }
-
-    protected override void OnPointerMoved(PointerEventArgs e)
-    {
-        if (!_isPressed)
-            return;
-            
-        if (Parent == null)
-            return;
-
-        var currentPosition = e.GetPosition(Parent as Visual);
-        var offsetX = currentPosition.X -  _positionInBlock.X;
-        var offsetY = currentPosition.Y - _positionInBlock.Y;
-
-        _transform = new TranslateTransform(offsetX, offsetY);
-        RenderTransform = _transform;
-            
-        base.OnPointerMoved(e);
-=======
         if(input_el == null) return new ObservableCollection<bool> { };
 
         return new ObservableCollection<bool>(input_el.BoolArrayOut);
->>>>>>> 48e46be (main logical_app)
     }
     
 }

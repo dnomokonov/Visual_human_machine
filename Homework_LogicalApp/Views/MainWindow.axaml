@@ -26,15 +26,6 @@
 
     <!-- ListBox within Canvas with specified size and alignment -->
     
-<<<<<<< HEAD
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        
-        <cc:InputControler />
-        
-        <cc:BufferControl />
-        
-    </StackPanel>
-=======
     <ListBox x:Name="ExamplesLb" ItemsSource="{Binding Path=Examples}" Width="180"
              Canvas.Left="0" Canvas.Top="30">
       <ListBox.ItemsPanel>
@@ -43,7 +34,6 @@
         </ItemsPanelTemplate>
       </ListBox.ItemsPanel>
     </ListBox>
->>>>>>> 48e46be (main logical_app)
     
   </Canvas>
 

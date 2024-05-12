@@ -10,11 +10,7 @@ using Avalonia.Media;
 
 namespace Homework_LogicalApp.Controls;
 
-<<<<<<< HEAD
-public class AndControl : Control
-=======
 public class AndControl : Connectable
->>>>>>> 48e46be (main logical_app)
 {
     private const double Radius = 4;
     private TranslateTransform _transform = null!;
@@ -198,43 +194,6 @@ public class AndControl : Connectable
     {
         if(input_el == null) return new ObservableCollection<bool> { };
         
-<<<<<<< HEAD
-        _isPressed = true;
-        _positionInBlock = e.GetPosition(Parent as Visual);
-            
-        if (_transform != null!) 
-            _positionInBlock = new Point(
-                _positionInBlock.X - _transform.X,
-                _positionInBlock.Y - _transform.Y);
-        
-        base.OnPointerPressed(e);
-    }
-
-    protected override void OnPointerReleased(PointerReleasedEventArgs e)
-    {
-        _isPressed = false;
-            
-        base.OnPointerReleased(e);
-    }
-
-    protected override void OnPointerMoved(PointerEventArgs e)
-    {
-        if (!_isPressed)
-            return;
-            
-        if (Parent == null)
-            return;
-
-        var currentPosition = e.GetPosition(Parent as Visual);
-
-        var offsetX = currentPosition.X -  _positionInBlock.X;
-        var offsetY = currentPosition.Y - _positionInBlock.Y;
-
-        _transform = new TranslateTransform(offsetX, offsetY);
-        RenderTransform = _transform;
-            
-        base.OnPointerMoved(e);
-=======
         if (TempArray.Count == 0) {
             TempArray = input_el.BoolArrayOut; // It only works for two inputs
             return new ObservableCollection<bool>(input_el.BoolArrayOut);
@@ -243,6 +202,5 @@ public class AndControl : Connectable
         var result = TempArray.Zip(input_el.BoolArrayOut, (x, y) => x && y);
     
         return new ObservableCollection<bool>(result);
->>>>>>> 48e46be (main logical_app)
     }
 }
