@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -8,12 +10,9 @@ using Avalonia.Media;
 
 namespace Homework_LogicalApp.Controls;
 
-public class AndControl : Connector
+public class AndControl : Connectable
 {
     private const double Radius = 4;
-    private bool _isSelected;
-    private bool _isPressed; 
-    private Point _positionInBlock;
     private TranslateTransform _transform = null!;
     public IBrush? Stroke { get; set; }
     public double StrokeThickness { get; set; }
@@ -26,8 +25,7 @@ public class AndControl : Connector
     public string TypeValve { get; set; } // Type: GOST or ANSI
     public List<bool> InputStates { get; set; }
     
-    
-    public AndControl()
+    public AndControl(int id, Point? p = null) : base(id, p)
     {
         Width = 50;
         Height = 100;
@@ -51,7 +49,7 @@ public class AndControl : Connector
         var typeface = new Typeface(SetFonts);
         
         // Set outline color based on selection
-        var outlineBrush = _isSelected ? Brushes.OrangeRed : Brushes.Black;
+        var outlineBrush = IsSelected ? Brushes.OrangeRed : Brushes.Black;
         var outlinePen = new Pen(outlineBrush, StrokeThickness);
         
         if (TypeValve == "ANSI")
@@ -189,53 +187,20 @@ public class AndControl : Connector
         base.Render(context);
     }
     
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    // My temporary crutch :D
+    private ObservableCollection<bool> TempArray { get; set; } = new ObservableCollection<bool>();
+    
+    public override ObservableCollection<bool> GetOutput(ObservableCollection<bool> input)
     {
-        if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonPressed) return;
-        _isSelected = !_isSelected;
-        InvalidateVisual();
-        e.Handled = true;
+        if(input_el == null) return new ObservableCollection<bool> { };
         
-        _isPressed = true;
-        _positionInBlock = e.GetPosition(Parent as Visual);
-            
-        if (_transform != null!) 
-            _positionInBlock = new Point(
-                _positionInBlock.X - _transform.X,
-                _positionInBlock.Y - _transform.Y);
-
-        if (e.ClickCount == 2)
-        {
-            Connect(this);
+        if (TempArray.Count == 0) {
+            TempArray = input_el.BoolArrayOut; // It only works for two inputs
+            return new ObservableCollection<bool>(input_el.BoolArrayOut);
         }
         
-        
-        base.OnPointerPressed(e);
-    }
-
-    protected override void OnPointerReleased(PointerReleasedEventArgs e)
-    {
-        _isPressed = false;
-            
-        base.OnPointerReleased(e);
-    }
-
-    protected override void OnPointerMoved(PointerEventArgs e)
-    {
-        if (!_isPressed)
-            return;
-            
-        if (Parent == null)
-            return;
-
-        var currentPosition = e.GetPosition(Parent as Visual);
-
-        var offsetX = currentPosition.X -  _positionInBlock.X;
-        var offsetY = currentPosition.Y - _positionInBlock.Y;
-
-        _transform = new TranslateTransform(offsetX, offsetY);
-        RenderTransform = _transform;
-            
-        base.OnPointerMoved(e);
+        var result = TempArray.Zip(input_el.BoolArrayOut, (x, y) => x && y);
+    
+        return new ObservableCollection<bool>(result);
     }
 }

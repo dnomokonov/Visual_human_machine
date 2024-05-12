@@ -1,38 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.JavaScript;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
+﻿using Avalonia;
 using Avalonia.Media;
+using System;
+using System.Collections.Generic;
 
-namespace Homework_LogicalApp.Controls;
-
-public class Connector : Control
-{ 
-    //private List<Point> Points { get; set; }
-    
-    // Получаю первоначальные координаты спавна
-    // Цель: получение динамических координат
-    public void Connect(Connector? obj)
+namespace Homework_LogicalApp.Controls
+{
+    public class Connector : Connectable
     {
-        if (obj == null) return;
+        public Connector(int id, Point pos) : base(id, pos) { }
+        public Connector(int id, Connectable input, Connectable output) : base(id, new Point(0, 0))
+        {
+            this.Id = id;   
 
-        var posX = obj.Bounds.X;
-        var posY = obj.Bounds.Y;
+            input_el = input;
+            input_el.output_el = output;    
+            output_el = output;
+            output_el.input_el = input;
 
-        var point = new Point(posX, posY);
+            Position = new Point(0, 0);
+        }
 
-        Console.WriteLine($"x = {posX} | Y = {posY}");
-    }
+        public override void Render(DrawingContext context)
+        {
+            base.Render(context);
+            context.DrawLine(new Pen(Brushes.LimeGreen, 2), input_el.Position, output_el.Position);
+        }
 
-    public void Draw(DrawingContext context)
-    {
-        var renderSize = Bounds.Size;
-        
-        var brush = Brushes.Blue;
-        var pen = new Pen(brush, 1);
-        var rect = new Rect(0, 0, renderSize.Width, renderSize.Height);
-        context.DrawRectangle(brush, pen, rect);
+        public void SetPosition(double x, double y)
+        {
+            Position = new Point(x, y);
+        }
+
+        public Point GetPosition()
+        {
+            return Position;
+        }
     }
 }
