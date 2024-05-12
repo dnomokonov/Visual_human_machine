@@ -39,3 +39,15 @@ Create a custom control that will have two states — collapsed and full-size. W
 
 ## [Homework #10. Custom Controls №2](Homework_10_ColorPicker)
 Create a Palette control. The element must include all the necessary properties: the selected color, size, etc.
+
+## [Homework #11. Custom Controls №3](Homework_11_CustomTable)
+Create a control that displays the properties of the passed object (the object can beof any type!) in the form of a hierarchy. If the property has a base type (int, double, string, etc.), the pair "Attribute name":"Attribute value" is displayed. If the property does not have a base type, it is displayed as a drop-down list with a title in which the name of the property is written, and the contents are displayed in the body.
+
+## [Homework #12. ](Homework_12_Valves)
+Implement a library of gate controls for logic circuits. The controls must support the following properties: input values (collection), output value, display standard (GOST or ANSI), label (if present, drawn under the valve), font for the label, whether the element is highlighted or not (if highlighted, it should be visually displayed)
+
+## [Homework #13-14. ](Homework_LogicalApp)
+- [x] Add elements for input and output values to the library from homework No. 12. The input elements generate 0 or 1 and pass it to the output (implement the property for the output like the rest of the valves), the state is switched by left mouse click. The output element shows the value that goes to its input (implemented through a property).
+- [x] Add a connector control that allows you to connect the input and output. The connector must have properties for the input and output values. Visually depict the connector as a line.
+- [x] implement the choice of the bit depth of the input, output elements and connectors. Each bit of the input element can be switched by mouse click
+- [x] Finalize the application from homework No. 13 by adding to it saving the drawn diagram to the SQLite database and loading the diagram from the database file. The database file acts as a project file, i.e. each schema is stored in a separate database file
