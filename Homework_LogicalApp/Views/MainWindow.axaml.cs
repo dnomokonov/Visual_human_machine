@@ -125,18 +125,20 @@ public partial class MainWindow : Window
         if (e.Key == Key.Q)
         {
             if (item == null) return;
-            if (item.CountInput is < 3 and >= 1)
+            if (item.CountInput is < 4 and >= 1)
             {
                 item.CountInput += 1;
+                item.BoolArrayOut.Add(false);
             }
         }
         
         if (e.Key == Key.W)
         {
             if (item == null) return;
-            if (item.CountInput is <= 3 and > 1)
+            if (item.CountInput is <= 4 and > 1)
             {
                 item.CountInput -= 1;
+                item.BoolArrayOut.RemoveAt(item.BoolArrayOut.Count - 1);
             }
         }
     }
